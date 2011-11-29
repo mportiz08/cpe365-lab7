@@ -42,7 +42,9 @@ public class GuestPanel extends javax.swing.JPanel
 
     jLabel1 = new javax.swing.JLabel();
 
+    setMinimumSize(new java.awt.Dimension(700, 400));
     setName("Form"); // NOI18N
+    setPreferredSize(new java.awt.Dimension(700, 400));
 
     org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(lab7.Lab7App.class).getContext().getResourceMap(GuestPanel.class);
     jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
@@ -55,14 +57,14 @@ public class GuestPanel extends javax.swing.JPanel
       .add(layout.createSequentialGroup()
         .addContainerGap()
         .add(jLabel1)
-        .addContainerGap(344, Short.MAX_VALUE))
+        .addContainerGap(644, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
       .add(layout.createSequentialGroup()
         .addContainerGap()
         .add(jLabel1)
-        .addContainerGap(264, Short.MAX_VALUE))
+        .addContainerGap(364, Short.MAX_VALUE))
     );
   }// </editor-fold>//GEN-END:initComponents
   // Variables declaration - do not modify//GEN-BEGIN:variables

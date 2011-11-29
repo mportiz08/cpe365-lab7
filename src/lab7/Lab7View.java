@@ -106,6 +106,7 @@ public class Lab7View extends FrameView
         }
       }
     });
+    Lab7App.getApplication().getMainFrame().pack();
   }
 
   @Action
@@ -144,11 +145,14 @@ public class Lab7View extends FrameView
     statusAnimationLabel = new javax.swing.JLabel();
     progressBar = new javax.swing.JProgressBar();
 
+    mainPanel.setMinimumSize(new java.awt.Dimension(800, 480));
     mainPanel.setName("mainPanel"); // NOI18N
-    mainPanel.setPreferredSize(new java.awt.Dimension(800, 600));
+    mainPanel.setPreferredSize(new java.awt.Dimension(800, 480));
     mainPanel.setRequestFocusEnabled(false);
 
+    tabbedPane.setMinimumSize(new java.awt.Dimension(750, 440));
     tabbedPane.setName("tabbedPane"); // NOI18N
+    tabbedPane.setPreferredSize(new java.awt.Dimension(750, 440));
 
     adminPanel.setName("adminPanel"); // NOI18N
     org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(lab7.Lab7App.class).getContext().getResourceMap(Lab7View.class);
@@ -164,16 +168,13 @@ public class Lab7View extends FrameView
     mainPanel.setLayout(mainPanelLayout);
     mainPanelLayout.setHorizontalGroup(
       mainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-      .add(mainPanelLayout.createSequentialGroup()
-        .addContainerGap()
-        .add(tabbedPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
-        .addContainerGap())
+      .add(org.jdesktop.layout.GroupLayout.TRAILING, tabbedPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
     );
     mainPanelLayout.setVerticalGroup(
       mainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
       .add(mainPanelLayout.createSequentialGroup()
         .addContainerGap()
-        .add(tabbedPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+        .add(tabbedPane, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
         .addContainerGap())
     );
 
@@ -208,11 +209,11 @@ public class Lab7View extends FrameView
     statusPanel.setLayout(statusPanelLayout);
     statusPanelLayout.setHorizontalGroup(
       statusPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-      .add(statusPanelSeparator, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+      .add(statusPanelSeparator, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
       .add(statusPanelLayout.createSequentialGroup()
         .addContainerGap()
         .add(statusMessageLabel)
-        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 204, Short.MAX_VALUE)
+        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 604, Short.MAX_VALUE)
         .add(progressBar, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(statusAnimationLabel)
