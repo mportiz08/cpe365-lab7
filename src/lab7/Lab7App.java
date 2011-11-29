@@ -6,6 +6,8 @@ package lab7;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 
+import java.sql.*;
+
 /**
  * The main class of the application.
  */
@@ -17,6 +19,7 @@ public class Lab7App extends SingleFrameApplication
   @Override
   protected void startup()
   {
+    Connection c = InnDB.getConnection();
     show(new Lab7View(this));
   }
 
