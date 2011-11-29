@@ -21,7 +21,7 @@ public class Lab7App extends SingleFrameApplication
   {
     InnDB db = new InnDB();
     Connection c = db.getConnection();
-    show(new Lab7View(this));
+    show(new Lab7View(this, c));
   }
 
   /**

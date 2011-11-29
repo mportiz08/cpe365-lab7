@@ -10,16 +10,25 @@
  */
 package lab7;
 
+import java.sql.*;
+
 /**
  *
  * @author marcus
  */
 public class AdminPanel extends javax.swing.JPanel
 {
+  private Connection conn;
+  
   /** Creates new form AdminPanel */
   public AdminPanel()
   {
     initComponents();
+  }
+  
+  public void addConnection(Connection c)
+  {
+    this.conn = c;
   }
 
   /** This method is called from within the constructor to

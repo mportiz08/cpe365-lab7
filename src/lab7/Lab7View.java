@@ -15,16 +15,22 @@ import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 
+import java.sql.*;
+
 /**
  * The application's main frame.
  */
 public class Lab7View extends FrameView
 {
-  public Lab7View(SingleFrameApplication app)
+  public Lab7View(SingleFrameApplication app, Connection c)
   {
     super(app);
 
     initComponents();
+    
+    this.adminPanel.addConnection(c);
+    this.ownerPanel.addConnection(c);
+    this.guestPanel.addConnection(c);
 
     // status bar initialization - message timeout, idle icon and busy animation, etc
     ResourceMap resourceMap = getResourceMap();
