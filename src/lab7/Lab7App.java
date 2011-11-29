@@ -19,7 +19,8 @@ public class Lab7App extends SingleFrameApplication
   @Override
   protected void startup()
   {
-    Connection c = InnDB.getConnection();
+    InnDB db = new InnDB();
+    Connection c = db.getConnection();
     show(new Lab7View(this));
   }
 

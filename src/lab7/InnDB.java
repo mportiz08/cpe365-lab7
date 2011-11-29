@@ -10,7 +10,9 @@ import java.sql.*;
  */
 public class InnDB
 {
-  public static Connection getConnection()
+  private Connection conn;
+  
+  public InnDB()
   {
     File settings = new File("ServerSettings.txt");
     Scanner s = null;
@@ -35,10 +37,9 @@ public class InnDB
       System.exit(1);
     }
     
-    Connection conn = null;
     try
     {
-      conn = DriverManager.getConnection(s.nextLine(), s.nextLine(), s.nextLine());
+      this.conn = DriverManager.getConnection(s.nextLine(), s.nextLine(), s.nextLine());
     }
     catch(SQLException e)
     {
@@ -46,6 +47,16 @@ public class InnDB
       System.exit(1);
     }
     
-    return conn;
+    checkForTable();
+  }
+  
+  public Connection getConnection()
+  { 
+    return this.conn;
+  }
+  
+  private void checkForTable()
+  {
+    
   }
 }
