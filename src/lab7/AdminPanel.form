@@ -27,8 +27,18 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="639" max="32767" attributes="0"/>
+              <Component id="statusLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="status" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="reservationsLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="reservations" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="roomsLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="rooms" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="237" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -36,17 +46,58 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="statusLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="status" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="reservationsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="reservations" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="roomsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="rooms" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace pref="364" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="statusLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
-        <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
+        <Property name="font" type="java.awt.Font" resourceKey="statusLabel.font"/>
+        <Property name="text" type="java.lang.String" resourceKey="statusLabel.text"/>
+        <Property name="name" type="java.lang.String" value="statusLabel" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="status">
+      <Properties>
+        <Property name="foreground" type="java.awt.Color" resourceKey="status.foreground"/>
+        <Property name="text" type="java.lang.String" resourceKey="status.text"/>
+        <Property name="name" type="java.lang.String" value="status" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="reservationsLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="reservationsLabel.font"/>
+        <Property name="text" type="java.lang.String" resourceKey="reservationsLabel.text"/>
+        <Property name="name" type="java.lang.String" value="reservationsLabel" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="reservations">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="reservations.text"/>
+        <Property name="name" type="java.lang.String" value="reservations" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="roomsLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="roomsLabel.font"/>
+        <Property name="text" type="java.lang.String" resourceKey="roomsLabel.text"/>
+        <Property name="name" type="java.lang.String" value="roomsLabel" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="rooms">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="rooms.text"/>
+        <Property name="name" type="java.lang.String" value="rooms" noResource="true"/>
       </Properties>
     </Component>
   </SubComponents>

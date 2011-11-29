@@ -40,15 +40,39 @@ public class AdminPanel extends javax.swing.JPanel
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
-    jLabel1 = new javax.swing.JLabel();
+    statusLabel = new javax.swing.JLabel();
+    status = new javax.swing.JLabel();
+    reservationsLabel = new javax.swing.JLabel();
+    reservations = new javax.swing.JLabel();
+    roomsLabel = new javax.swing.JLabel();
+    rooms = new javax.swing.JLabel();
 
     setMinimumSize(new java.awt.Dimension(700, 400));
     setName("Form"); // NOI18N
     setPreferredSize(new java.awt.Dimension(700, 400));
 
     org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(lab7.Lab7App.class).getContext().getResourceMap(AdminPanel.class);
-    jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-    jLabel1.setName("jLabel1"); // NOI18N
+    statusLabel.setFont(resourceMap.getFont("statusLabel.font")); // NOI18N
+    statusLabel.setText(resourceMap.getString("statusLabel.text")); // NOI18N
+    statusLabel.setName("statusLabel"); // NOI18N
+
+    status.setForeground(resourceMap.getColor("status.foreground")); // NOI18N
+    status.setText(resourceMap.getString("status.text")); // NOI18N
+    status.setName("status"); // NOI18N
+
+    reservationsLabel.setFont(resourceMap.getFont("reservationsLabel.font")); // NOI18N
+    reservationsLabel.setText(resourceMap.getString("reservationsLabel.text")); // NOI18N
+    reservationsLabel.setName("reservationsLabel"); // NOI18N
+
+    reservations.setText(resourceMap.getString("reservations.text")); // NOI18N
+    reservations.setName("reservations"); // NOI18N
+
+    roomsLabel.setFont(resourceMap.getFont("roomsLabel.font")); // NOI18N
+    roomsLabel.setText(resourceMap.getString("roomsLabel.text")); // NOI18N
+    roomsLabel.setName("roomsLabel"); // NOI18N
+
+    rooms.setText(resourceMap.getString("rooms.text")); // NOI18N
+    rooms.setName("rooms"); // NOI18N
 
     org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
     this.setLayout(layout);
@@ -56,18 +80,39 @@ public class AdminPanel extends javax.swing.JPanel
       layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
       .add(layout.createSequentialGroup()
         .addContainerGap()
-        .add(jLabel1)
-        .addContainerGap(639, Short.MAX_VALUE))
+        .add(statusLabel)
+        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+        .add(status)
+        .add(18, 18, 18)
+        .add(reservationsLabel)
+        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+        .add(reservations)
+        .add(18, 18, 18)
+        .add(roomsLabel)
+        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+        .add(rooms)
+        .addContainerGap(237, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
       .add(layout.createSequentialGroup()
         .addContainerGap()
-        .add(jLabel1)
+        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+          .add(statusLabel)
+          .add(status)
+          .add(reservationsLabel)
+          .add(reservations)
+          .add(roomsLabel)
+          .add(rooms))
         .addContainerGap(364, Short.MAX_VALUE))
     );
   }// </editor-fold>//GEN-END:initComponents
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JLabel jLabel1;
+  private javax.swing.JLabel reservations;
+  private javax.swing.JLabel reservationsLabel;
+  private javax.swing.JLabel rooms;
+  private javax.swing.JLabel roomsLabel;
+  private javax.swing.JLabel status;
+  private javax.swing.JLabel statusLabel;
   // End of variables declaration//GEN-END:variables
 }
