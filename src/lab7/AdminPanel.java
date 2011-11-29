@@ -19,6 +19,7 @@ import java.sql.*;
 public class AdminPanel extends javax.swing.JPanel
 {
   private Connection conn;
+  private Admin admin;
   
   /** Creates new form AdminPanel */
   public AdminPanel()
@@ -29,6 +30,7 @@ public class AdminPanel extends javax.swing.JPanel
   public void addConnection(Connection c)
   {
     this.conn = c;
+    this.admin = new Admin(c);
   }
 
   /** This method is called from within the constructor to
