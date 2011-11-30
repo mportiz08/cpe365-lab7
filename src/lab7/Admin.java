@@ -26,8 +26,18 @@ public class Admin
    */
   public String getDBStatus()
   {
-    // TODO
-    return new String();
+    String status = null;
+    
+    if(this.getNumRooms() == 0 && this.getNumReservations() == 0)
+    {
+      status = "empty";
+    }
+    else
+    {
+      status = "full";
+    }
+    
+    return status;
   }
   
   /**

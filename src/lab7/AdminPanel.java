@@ -18,6 +18,8 @@ import java.sql.*;
  */
 public class AdminPanel extends javax.swing.JPanel
 {
+  public static java.awt.Color GREEN = new java.awt.Color(61, 116, 94);
+  
   private Connection conn;
   private Admin admin;
   
@@ -39,9 +41,17 @@ public class AdminPanel extends javax.swing.JPanel
   {
     Integer numRooms = this.admin.getNumRooms();
     Integer numReservations = this.admin.getNumReservations();
+    String s = this.admin.getDBStatus();
     
     this.rooms.setText(numRooms.toString());
     this.reservations.setText(numReservations.toString());
+    
+    if(s.equals("full"))
+    {
+      this.status.setForeground(GREEN);
+    }
+    
+    this.status.setText(s);
   }
 
   /** This method is called from within the constructor to
