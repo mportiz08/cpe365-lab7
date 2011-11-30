@@ -27,13 +27,53 @@ public class Admin
   
   public int getNumRooms()
   {
-    // TODO
-    return 0;
+    return aggregate("SELECT COUNT(*) FROM Rooms");
   }
   
   public int getNumReservations()
   {
-    // TODO
-    return 0;
+    return aggregate("SELECT COUNT(*) FROM Reservations");
+  }
+  
+  /**
+   * Shortcut for executing queries and getting its results.
+   * @param sql The SQL query.
+   * @return ResultSet the result of the SQL query
+   */
+  private ResultSet query(String sql)
+  {
+    ResultSet results = null;
+    
+    try
+    {
+      Statement s = this.conn.createStatement();
+      results = s.executeQuery(sql);
+    }
+    catch(SQLException e)
+    {
+      System.err.println("Error occured with SQL command.");
+      System.exit(1);
+    }
+    
+    return results;
+  }
+  
+  private int aggregate(String sql)
+  {
+    int num = 0;
+    ResultSet results = query(sql);
+    
+    try
+    {
+      results.next();
+      num = results.getInt(1);
+    }
+    catch(SQLException e)
+    {
+      System.err.println("Error occured with SQL command.");
+      System.exit(1);
+    }
+    
+    return num;
   }
 }

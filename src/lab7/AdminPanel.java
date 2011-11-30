@@ -31,6 +31,17 @@ public class AdminPanel extends javax.swing.JPanel
   {
     this.conn = c;
     this.admin = new Admin(c);
+    
+    updateStatus();
+  }
+  
+  private void updateStatus()
+  {
+    Integer numRooms = this.admin.getNumRooms();
+    Integer numReservations = this.admin.getNumReservations();
+    
+    this.rooms.setText(numRooms.toString());
+    this.reservations.setText(numReservations.toString());
   }
 
   /** This method is called from within the constructor to
