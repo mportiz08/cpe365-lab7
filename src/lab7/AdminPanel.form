@@ -25,20 +25,33 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="statusLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="status" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="reservationsLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="reservations" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="roomsLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="rooms" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="237" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="statusLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="status" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="reservationsLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="reservations" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="roomsLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="rooms" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="viewRoomsButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="viewReservationsButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="clearDBButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="reloadDBButton" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace pref="199" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -54,7 +67,14 @@
                   <Component id="roomsLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="rooms" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="364" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="viewRoomsButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="viewReservationsButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="clearDBButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="reloadDBButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="328" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -98,6 +118,30 @@
       <Properties>
         <Property name="text" type="java.lang.String" resourceKey="rooms.text"/>
         <Property name="name" type="java.lang.String" value="rooms" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="viewRoomsButton">
+      <Properties>
+        <Property name="label" type="java.lang.String" resourceKey="viewRoomsButton.label"/>
+        <Property name="name" type="java.lang.String" value="viewRoomsButton" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="viewReservationsButton">
+      <Properties>
+        <Property name="label" type="java.lang.String" resourceKey="viewReservationsButton.label"/>
+        <Property name="name" type="java.lang.String" value="viewReservationsButton" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="clearDBButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="clearDBButton.text"/>
+        <Property name="name" type="java.lang.String" value="clearDBButton" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="reloadDBButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="reloadDBButton.text"/>
+        <Property name="name" type="java.lang.String" value="reloadDBButton" noResource="true"/>
       </Properties>
     </Component>
   </SubComponents>

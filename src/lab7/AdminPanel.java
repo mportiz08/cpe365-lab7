@@ -69,6 +69,10 @@ public class AdminPanel extends javax.swing.JPanel
     reservations = new javax.swing.JLabel();
     roomsLabel = new javax.swing.JLabel();
     rooms = new javax.swing.JLabel();
+    viewRoomsButton = new javax.swing.JButton();
+    viewReservationsButton = new javax.swing.JButton();
+    clearDBButton = new javax.swing.JButton();
+    reloadDBButton = new javax.swing.JButton();
 
     setMinimumSize(new java.awt.Dimension(700, 400));
     setName("Form"); // NOI18N
@@ -97,24 +101,46 @@ public class AdminPanel extends javax.swing.JPanel
     rooms.setText(resourceMap.getString("rooms.text")); // NOI18N
     rooms.setName("rooms"); // NOI18N
 
+    viewRoomsButton.setLabel(resourceMap.getString("viewRoomsButton.label")); // NOI18N
+    viewRoomsButton.setName("viewRoomsButton"); // NOI18N
+
+    viewReservationsButton.setLabel(resourceMap.getString("viewReservationsButton.label")); // NOI18N
+    viewReservationsButton.setName("viewReservationsButton"); // NOI18N
+
+    clearDBButton.setText(resourceMap.getString("clearDBButton.text")); // NOI18N
+    clearDBButton.setName("clearDBButton"); // NOI18N
+
+    reloadDBButton.setText(resourceMap.getString("reloadDBButton.text")); // NOI18N
+    reloadDBButton.setName("reloadDBButton"); // NOI18N
+
     org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
     this.setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
       .add(layout.createSequentialGroup()
         .addContainerGap()
-        .add(statusLabel)
-        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-        .add(status)
-        .add(18, 18, 18)
-        .add(reservationsLabel)
-        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-        .add(reservations)
-        .add(18, 18, 18)
-        .add(roomsLabel)
-        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-        .add(rooms)
-        .addContainerGap(237, Short.MAX_VALUE))
+        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+          .add(layout.createSequentialGroup()
+            .add(statusLabel)
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+            .add(status)
+            .add(18, 18, 18)
+            .add(reservationsLabel)
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+            .add(reservations)
+            .add(18, 18, 18)
+            .add(roomsLabel)
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+            .add(rooms))
+          .add(layout.createSequentialGroup()
+            .add(viewRoomsButton)
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+            .add(viewReservationsButton)
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+            .add(clearDBButton)
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+            .add(reloadDBButton)))
+        .addContainerGap(199, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -127,15 +153,25 @@ public class AdminPanel extends javax.swing.JPanel
           .add(reservations)
           .add(roomsLabel)
           .add(rooms))
-        .addContainerGap(364, Short.MAX_VALUE))
+        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+          .add(viewRoomsButton)
+          .add(viewReservationsButton)
+          .add(clearDBButton)
+          .add(reloadDBButton))
+        .addContainerGap(328, Short.MAX_VALUE))
     );
   }// </editor-fold>//GEN-END:initComponents
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton clearDBButton;
+  private javax.swing.JButton reloadDBButton;
   private javax.swing.JLabel reservations;
   private javax.swing.JLabel reservationsLabel;
   private javax.swing.JLabel rooms;
   private javax.swing.JLabel roomsLabel;
   private javax.swing.JLabel status;
   private javax.swing.JLabel statusLabel;
+  private javax.swing.JButton viewReservationsButton;
+  private javax.swing.JButton viewRoomsButton;
   // End of variables declaration//GEN-END:variables
 }
