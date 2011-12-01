@@ -143,15 +143,17 @@ public class OwnerPanel extends javax.swing.JPanel
 
 private void OccupancyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OccupancyButtonActionPerformed
 
-    System.out.println("Clicked Occupancy Button");
-    OccupancyPanel occupancy = new OccupancyPanel();
+    System.out.println("Clicked Occupancy Button");   
+    OccupancyPanel occupancy = new OccupancyPanel(owner);
     ContentPane.setContentPane(occupancy);
-    ContentPane.setVisible(true);        
+    ContentPane.setVisible(true);   
+    
+    
 }//GEN-LAST:event_OccupancyButtonActionPerformed
 
 private void RevenueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueButtonActionPerformed
     
-    System.out.println("Revenue Button");
+    System.out.println(01 == 1);
     RevenuePanel revenue = new RevenuePanel();
     ContentPane.setContentPane(revenue);
     ContentPane.setVisible(true);
