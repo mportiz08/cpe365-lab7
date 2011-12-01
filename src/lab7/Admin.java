@@ -88,6 +88,38 @@ public class Admin
     return rooms.toArray(new Object[rooms.size()][rooms.size()]);
   }
   
+  public Object[][] getReservations()
+  {
+    ResultSet rows = query("SELECT * FROM Reservations");
+    ArrayList<Object[]> reservations = new ArrayList<Object[]>();
+    
+    try
+    {
+      while(rows.next())
+      {
+        Integer code = rows.getInt("Code");
+        String room = rows.getString("Room");
+        java.sql.Date checkIn = rows.getDate("CheckIn");
+        java.sql.Date checkOut = rows.getDate("CheckOut");
+        Double rate = rows.getDouble("Rate");
+        String lastName = rows.getString("LastName");
+        String firstName = rows.getString("FirstName");
+        Integer adults = rows.getInt("Adults");
+        Integer kids = rows.getInt("Kids");
+        Object[] reservation = {code, room, checkIn, checkOut, rate, lastName,
+                                firstName, adults, kids};
+        reservations.add(reservation);
+      }
+    }
+    catch(SQLException e)
+    {
+      System.err.println("Error retrieving Reservation records from database.");
+      System.exit(1);
+    }
+    
+    return reservations.toArray(new Object[reservations.size()][reservations.size()]);
+  }
+  
   /**
    * Shortcut for executing queries and getting its results.
    * @param sql The SQL query.

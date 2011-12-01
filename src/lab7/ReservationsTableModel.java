@@ -3,30 +3,30 @@ package lab7;
 import javax.swing.table.*;
 
 /**
- * Table model for "Rooms"
+ * TableModel for "Reservations"
  * @author Marcus Ortiz
  */
-public class RoomsTableModel extends AbstractTableModel
+public class ReservationsTableModel extends AbstractTableModel
 {
-  private Object[][] rooms;
+  private Object[][] reservations;
   private String[] cols;
   
-  public RoomsTableModel(Object[][] rooms)
+  public ReservationsTableModel(Object[][] rooms)
   {
-    this.rooms = rooms;
-    String[] colNames = {"Id", "Name", "Beds", "BedType", "MaxOccupancy",
-                 "BasePrice", "Decor"};
+    this.reservations = rooms;
+    String[] colNames = {"Code", "Room", "CheckIn", "CheckOut", "Rate",
+                         "LastName", "FirstName", "Adults", "Kids"};
     this.cols = colNames;
   }
   
   public Object getValueAt(int row, int col)
   {
-    return this.rooms[row][col];
+    return this.reservations[row][col];
   }
   
   public int getRowCount()
   {
-    return rooms.length;
+    return reservations.length;
   }
   
   @Override

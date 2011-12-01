@@ -1,21 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * AdminPanel.java
- *
- * Created on Nov 28, 2011, 9:20:30 PM
- */
 package lab7;
 
 import java.sql.*;
 import javax.swing.*;
 
-/**
- *
- * @author marcus
+/*
+ * AdminPanel -- the INN App admin interface
+ * @author Marcus Ortiz
  */
 public class AdminPanel extends javax.swing.JPanel
 {
@@ -112,6 +102,11 @@ public class AdminPanel extends javax.swing.JPanel
 
     viewReservationsButton.setLabel(resourceMap.getString("viewReservationsButton.label")); // NOI18N
     viewReservationsButton.setName("viewReservationsButton"); // NOI18N
+    viewReservationsButton.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        viewReservationsHandler(evt);
+      }
+    });
 
     clearDBButton.setText(resourceMap.getString("clearDBButton.text")); // NOI18N
     clearDBButton.setName("clearDBButton"); // NOI18N
@@ -181,6 +176,15 @@ private void viewRoomsHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_
   this.tableContainer.setViewportView(table);
   table.setFillsViewportHeight(true);
 }//GEN-LAST:event_viewRoomsHandler
+
+private void viewReservationsHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewReservationsHandler
+  Object[][] data = this.admin.getReservations();
+  JTable table = new JTable(new ReservationsTableModel(data));
+  
+  this.tableContainer.setViewportView(table);
+  table.setFillsViewportHeight(true);
+}//GEN-LAST:event_viewReservationsHandler
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton clearDBButton;
   private javax.swing.JButton reloadDBButton;
