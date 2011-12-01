@@ -1,6 +1,7 @@
 package lab7;
 
 import java.sql.*;
+import java.util.*;
 
 /**
  * Admin -- implements the back end database work for AdminPanel
@@ -56,6 +57,67 @@ public class Admin
   public int getNumReservations()
   {
     return aggregate("SELECT COUNT(*) FROM Reservations");
+  }
+  
+  public Object[][] getRooms()
+  {
+    ResultSet rows = query("SELECT * FROM Rooms");
+    ArrayList<Object[]> rooms = new ArrayList<Object[]>();
+    
+    try
+    {
+      while(rows.next())
+      {
+        String id = rows.getString("Id");
+        String name = rows.getString("Name");
+        Integer beds = rows.getInt("Beds");
+        String bedType = rows.getString("BedType");
+        Integer maxOccupancy = rows.getInt("MaxOccupancy");
+        Integer basePrice = rows.getInt("BasePrice");
+        String decor = rows.getString("Decor");
+        Object[] room = {id, name, beds, bedType, maxOccupancy, basePrice, decor};
+        rooms.add(room);
+      }
+    }
+    catch(SQLException e)
+    {
+      System.err.println("Error retrieving Room records from database.");
+      System.exit(1);
+    }
+    
+    return rooms.toArray(new Object[rooms.size()][rooms.size()]);
+  }
+  
+  public Object[][] getReservations()
+  {
+    ResultSet rows = query("SELECT * FROM Reservations");
+    ArrayList<Object[]> reservations = new ArrayList<Object[]>();
+    
+    try
+    {
+      while(rows.next())
+      {
+        Integer code = rows.getInt("Code");
+        String room = rows.getString("Room");
+        java.sql.Date checkIn = rows.getDate("CheckIn");
+        java.sql.Date checkOut = rows.getDate("CheckOut");
+        Double rate = rows.getDouble("Rate");
+        String lastName = rows.getString("LastName");
+        String firstName = rows.getString("FirstName");
+        Integer adults = rows.getInt("Adults");
+        Integer kids = rows.getInt("Kids");
+        Object[] reservation = {code, room, checkIn, checkOut, rate, lastName,
+                                firstName, adults, kids};
+        reservations.add(reservation);
+      }
+    }
+    catch(SQLException e)
+    {
+      System.err.println("Error retrieving Reservation records from database.");
+      System.exit(1);
+    }
+    
+    return reservations.toArray(new Object[reservations.size()][reservations.size()]);
   }
   
   /**
