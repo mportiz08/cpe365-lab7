@@ -23,11 +23,8 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="111" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jLabel1" alignment="1" min="-2" pref="222" max="-2" attributes="0"/>
-                  <Component id="jTextField1" alignment="1" min="-2" pref="441" max="-2" attributes="0"/>
-              </Group>
+              <EmptySpace min="-2" pref="330" max="-2" attributes="0"/>
+              <Component id="jLabel1" min="-2" pref="222" max="-2" attributes="0"/>
               <EmptySpace pref="348" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -36,9 +33,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jLabel1" min="-2" pref="71" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="213" max="-2" attributes="0"/>
-              <Component id="jTextField1" min="-2" pref="172" max="-2" attributes="0"/>
-              <EmptySpace pref="144" max="32767" attributes="0"/>
+              <EmptySpace pref="529" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -49,12 +44,6 @@
         <Property name="font" type="java.awt.Font" resourceKey="jLabel1.font"/>
         <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
         <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="jTextField1">
-      <Properties>
-        <Property name="text" type="java.lang.String" resourceKey="jTextField1.text"/>
-        <Property name="name" type="java.lang.String" value="jTextField1" noResource="true"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -48,7 +48,6 @@ public class Owner {
           while(f){
              String s = results.getString("Name");
              temp.add(s);
-             i++;
              f = results.next();
           }
       }
@@ -58,18 +57,34 @@ public class Owner {
       }
       
       Object[][] rooms = new Object[temp.size()][2];
-      for (i = 0; i < 10; i++){
+      for (i = 0; i < temp.size(); i++){
         rooms[i][0] = temp.get(i);  
       }
       return rooms;
     }
     
     
-    public void getAvailableRooms(int month, int day){
-        String stmt = "SELECT roomname FROM rooms, reservations WHERE " +
-                "room = roomid AND to_date('" + day + "-" + month + 
-                "-10','DD-MM-YY') = checkin;";
+    public ArrayList<String> getAvailableRooms(String month, int day){
+        ArrayList<String> temp = new ArrayList<String>();
+        String stmt = "SELECT Name FROM Rooms, Reservations WHERE " +
+                "Room = Id AND to_date('" + day + "-" + month + 
+                "-10','DD-MM-YY') >= CheckIn AND to_date('" + day + "-" + month +
+                "-10','DD-MM-YY') < CheckOut";
+        System.out.println(stmt);
         ResultSet results = execute(stmt);
+        
+        try {
+          boolean f = results.next();
+          while(f){
+             temp.add(results.getString("Name"));     
+             f = results.next();
+          }
+        }
+        catch(SQLException ex){
+            System.err.println("Error retrieving data from ResultSet");
+            System.exit(1);
+        }
+        
+        return temp;
     }
-    
 }

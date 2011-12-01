@@ -10,6 +10,7 @@
  */
 package lab7;
 
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -53,7 +54,7 @@ public class OccupancyPanel extends javax.swing.JPanel {
         twoDate = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        RoomsTable = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -132,12 +133,12 @@ public class OccupancyPanel extends javax.swing.JPanel {
 
         jScrollPane1.setName("jScrollPane1"); // NOI18N
 
-        jTable1.setModel(RoomsModel);
-        jTable1.setName("jTable1"); // NOI18N
-        jTable1.setRowHeight(30);
-        jTable1.setRowMargin(5);
-        jTable1.setSelectionBackground(resourceMap.getColor("jTable1.selectionBackground")); // NOI18N
-        jScrollPane1.setViewportView(jTable1);
+        RoomsTable.setModel(RoomsModel);
+        RoomsTable.setName("RoomsTable"); // NOI18N
+        RoomsTable.setRowHeight(30);
+        RoomsTable.setRowMargin(5);
+        RoomsTable.setSelectionBackground(resourceMap.getColor("RoomsTable.selectionBackground")); // NOI18N
+        jScrollPane1.setViewportView(RoomsTable);
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
@@ -271,13 +272,35 @@ public class OccupancyPanel extends javax.swing.JPanel {
 private void oneDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_oneDateActionPerformed
 
     System.out.println("Clicked one date button");
-    int day = 1;
-    Boolean monthFound = false;
+    ArrayList<String> AvailableRooms = null;
     String monthString = this.one.getText();
     String dayString = this.two.getText();
-    String[] months = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
     
-    //Reading date from JTextFields
+    if(verifyDates(dayString, monthString)){
+        //Call model method
+    }
+    else{
+        System.out.println("Invalid date");
+        System.exit(1);
+    }
+    
+    AvailableRooms = this.owner.getAvailableRooms(monthString, Integer.parseInt(dayString));
+    for(int i = 0; i < RoomsModel.getRowCount(); i++){
+        if(AvailableRooms.contains(RoomsModel.getValueAt(i, 0).toString())){
+            RoomsModel.setValueAt("Occupied", i, 1);
+        }
+        else {
+            RoomsModel.setValueAt("Empty", i ,1);
+        }
+    }
+}//GEN-LAST:event_oneDateActionPerformed
+
+private boolean verifyDates(String dayString, String monthString){
+    String[] months = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
+    int day = 0;
+    boolean monthFound = false;
+    
+    //Checking both for nulls + valid month
     if(monthString != null && dayString != null && !monthString.isEmpty() && !dayString.isEmpty()) {
         try{
            day = Integer.parseInt(dayString);
@@ -295,16 +318,11 @@ private void oneDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     
     //Error Checking Dates/Calling model method
     if(day > 0 && day <= 31 && monthFound == true){
-        //Call model method
+        return true;
     }
-    else{
-        System.out.println("Invalid date!!");
-        System.exit(1);
-    }
-     
-    
-        
-}//GEN-LAST:event_oneDateActionPerformed
+
+    return false;
+}
 
 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Object[] columnName = {"Rooms", "Availability"};
@@ -317,6 +335,7 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable RoomsTable;
     private javax.swing.JTextField five;
     private javax.swing.JTextField four;
     private javax.swing.JButton jButton1;
@@ -330,7 +349,6 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTextField one;
