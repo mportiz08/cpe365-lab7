@@ -32,21 +32,28 @@ public class AdminPanel extends javax.swing.JPanel
   {
     Integer numRooms = this.admin.getNumRooms();
     Integer numReservations = this.admin.getNumReservations();
-    String s = this.admin.getDBStatus();
-
+    Admin.Status s = this.admin.getDBStatus();
+    
     this.rooms.setText(numRooms.toString());
     this.reservations.setText(numReservations.toString());
 
-    if(s.equals("full"))
+    if(s == Admin.Status.FULL)
     {
       this.status.setForeground(GREEN);
+      this.status.setText("full");
     }
     else
     {
       this.status.setForeground(RED);
+      if(s == Admin.Status.EMPTY)
+      {
+        this.status.setText("empty");
+      }
+      else if(s == Admin.Status.NO_DB)
+      {
+        this.status.setText("no database");
+      }
     }
-
-    this.status.setText(s);
   }
 
   /** This method is called from within the constructor to
@@ -69,6 +76,7 @@ public class AdminPanel extends javax.swing.JPanel
     clearDBButton = new javax.swing.JButton();
     reloadDBButton = new javax.swing.JButton();
     tableContainer = new javax.swing.JScrollPane();
+    removeDBButton = new javax.swing.JButton();
 
     setMinimumSize(new java.awt.Dimension(700, 400));
     setName("Form"); // NOI18N
@@ -123,8 +131,16 @@ public class AdminPanel extends javax.swing.JPanel
 
     reloadDBButton.setText(resourceMap.getString("reloadDBButton.text")); // NOI18N
     reloadDBButton.setName("reloadDBButton"); // NOI18N
+    reloadDBButton.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        reloadDBHandler(evt);
+      }
+    });
 
     tableContainer.setName("tableContainer"); // NOI18N
+
+    removeDBButton.setLabel(resourceMap.getString("removeDBButton.label")); // NOI18N
+    removeDBButton.setName("removeDBButton"); // NOI18N
 
     org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
     this.setLayout(layout);
@@ -153,7 +169,9 @@ public class AdminPanel extends javax.swing.JPanel
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
             .add(clearDBButton)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-            .add(reloadDBButton)))
+            .add(reloadDBButton)
+            .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+            .add(removeDBButton)))
         .addContainerGap())
     );
     layout.setVerticalGroup(
@@ -172,7 +190,8 @@ public class AdminPanel extends javax.swing.JPanel
           .add(viewRoomsButton)
           .add(viewReservationsButton)
           .add(clearDBButton)
-          .add(reloadDBButton))
+          .add(reloadDBButton)
+          .add(removeDBButton))
         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
         .add(tableContainer, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
         .addContainerGap())
@@ -201,9 +220,14 @@ private void clearDBHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cl
   this.tableContainer.setViewportView(null);
 }//GEN-LAST:event_clearDBHandler
 
+private void reloadDBHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reloadDBHandler
+  
+}//GEN-LAST:event_reloadDBHandler
+
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton clearDBButton;
   private javax.swing.JButton reloadDBButton;
+  private javax.swing.JButton removeDBButton;
   private javax.swing.JLabel reservations;
   private javax.swing.JLabel reservationsLabel;
   private javax.swing.JLabel rooms;

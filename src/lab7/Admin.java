@@ -9,6 +9,8 @@ import java.util.*;
  */
 public class Admin
 {
+  public enum Status {FULL, EMPTY, NO_DB};
+  
   /** Reference to the SQL database connection. */
   private Connection conn;
   
@@ -21,21 +23,20 @@ public class Admin
     this.conn = c;
   }
   
-  /**
-   * Returns the status of the database.
-   * @return String either "full", "empty", or "no database"
-   */
-  public String getDBStatus()
+  public Status getDBStatus()
   {
-    String status = null;
+    Status status = Status.NO_DB;
     
-    if(this.getNumRooms() == 0 && this.getNumReservations() == 0)
+    if(dbExists())
     {
-      status = "empty";
-    }
-    else
-    {
-      status = "full";
+      if(this.getNumRooms() == 0 && this.getNumReservations() == 0)
+      {
+        status = Status.EMPTY;
+      }
+      else
+      {
+        status = Status.FULL;
+      }
     }
     
     return status;
@@ -124,6 +125,25 @@ public class Admin
   {
     clearTable("Reservations");
     clearTable("Rooms");
+  }
+  
+  private boolean dbExists()
+  {
+    boolean roomsExists = false;
+    boolean reservationsExists = false;
+    
+    try
+    {
+      roomsExists = query("SELECT TABLE_NAME FROM USER_TABLES WHERE TABLE_NAME = 'ROOMS'").next();
+      reservationsExists = query("SELECT TABLE_NAME FROM USER_TABLES WHERE TABLE_NAME = 'RESERVATIONS'").next();
+    }
+    catch(SQLException e)
+    {
+      System.err.println("SQL error occured.");
+      System.exit(1);
+    }
+    
+    return roomsExists && reservationsExists;
   }
   
   private void clearTable(String table)
