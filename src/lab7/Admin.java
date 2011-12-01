@@ -1,6 +1,7 @@
 package lab7;
 
 import java.sql.*;
+import java.util.*;
 
 /**
  * Admin -- implements the back end database work for AdminPanel
@@ -56,6 +57,35 @@ public class Admin
   public int getNumReservations()
   {
     return aggregate("SELECT COUNT(*) FROM Reservations");
+  }
+  
+  public Object[][] getRooms()
+  {
+    ResultSet rows = query("SELECT * FROM Rooms");
+    ArrayList<Object[]> rooms = new ArrayList<Object[]>();
+    
+    try
+    {
+      while(rows.next())
+      {
+        String id = rows.getString("Id");
+        String name = rows.getString("Name");
+        Integer beds = rows.getInt("Beds");
+        String bedType = rows.getString("BedType");
+        Integer maxOccupancy = rows.getInt("MaxOccupancy");
+        Integer basePrice = rows.getInt("BasePrice");
+        String decor = rows.getString("Decor");
+        Object[] room = {id, name, beds, bedType, maxOccupancy, basePrice, decor};
+        rooms.add(room);
+      }
+    }
+    catch(SQLException e)
+    {
+      System.err.println("Error retrieving Room records from database.");
+      System.exit(1);
+    }
+    
+    return rooms.toArray(new Object[rooms.size()][rooms.size()]);
   }
   
   /**

@@ -11,6 +11,7 @@
 package lab7;
 
 import java.sql.*;
+import javax.swing.*;
 
 /**
  *
@@ -19,38 +20,37 @@ import java.sql.*;
 public class AdminPanel extends javax.swing.JPanel
 {
   public static java.awt.Color GREEN = new java.awt.Color(61, 116, 94);
-  
   private Connection conn;
   private Admin admin;
-  
+
   /** Creates new form AdminPanel */
   public AdminPanel()
   {
     initComponents();
   }
-  
+
   public void addConnection(Connection c)
   {
     this.conn = c;
     this.admin = new Admin(c);
-    
+
     updateStatus();
   }
-  
+
   private void updateStatus()
   {
     Integer numRooms = this.admin.getNumRooms();
     Integer numReservations = this.admin.getNumReservations();
     String s = this.admin.getDBStatus();
-    
+
     this.rooms.setText(numRooms.toString());
     this.reservations.setText(numReservations.toString());
-    
+
     if(s.equals("full"))
     {
       this.status.setForeground(GREEN);
     }
-    
+
     this.status.setText(s);
   }
 
@@ -73,6 +73,7 @@ public class AdminPanel extends javax.swing.JPanel
     viewReservationsButton = new javax.swing.JButton();
     clearDBButton = new javax.swing.JButton();
     reloadDBButton = new javax.swing.JButton();
+    tableContainer = new javax.swing.JScrollPane();
 
     setMinimumSize(new java.awt.Dimension(700, 400));
     setName("Form"); // NOI18N
@@ -103,6 +104,11 @@ public class AdminPanel extends javax.swing.JPanel
 
     viewRoomsButton.setLabel(resourceMap.getString("viewRoomsButton.label")); // NOI18N
     viewRoomsButton.setName("viewRoomsButton"); // NOI18N
+    viewRoomsButton.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        viewRoomsHandler(evt);
+      }
+    });
 
     viewReservationsButton.setLabel(resourceMap.getString("viewReservationsButton.label")); // NOI18N
     viewReservationsButton.setName("viewReservationsButton"); // NOI18N
@@ -113,6 +119,8 @@ public class AdminPanel extends javax.swing.JPanel
     reloadDBButton.setText(resourceMap.getString("reloadDBButton.text")); // NOI18N
     reloadDBButton.setName("reloadDBButton"); // NOI18N
 
+    tableContainer.setName("tableContainer"); // NOI18N
+
     org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
     this.setLayout(layout);
     layout.setHorizontalGroup(
@@ -120,6 +128,7 @@ public class AdminPanel extends javax.swing.JPanel
       .add(layout.createSequentialGroup()
         .addContainerGap()
         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+          .add(tableContainer, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
           .add(layout.createSequentialGroup()
             .add(statusLabel)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
@@ -140,7 +149,7 @@ public class AdminPanel extends javax.swing.JPanel
             .add(clearDBButton)
             .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
             .add(reloadDBButton)))
-        .addContainerGap(199, Short.MAX_VALUE))
+        .addContainerGap())
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -159,9 +168,19 @@ public class AdminPanel extends javax.swing.JPanel
           .add(viewReservationsButton)
           .add(clearDBButton)
           .add(reloadDBButton))
-        .addContainerGap(328, Short.MAX_VALUE))
+        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+        .add(tableContainer, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+        .addContainerGap())
     );
   }// </editor-fold>//GEN-END:initComponents
+
+private void viewRoomsHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewRoomsHandler
+  Object[][] data = this.admin.getRooms();
+  JTable table = new JTable(new RoomsTableModel(data));
+  
+  this.tableContainer.setViewportView(table);
+  table.setFillsViewportHeight(true);
+}//GEN-LAST:event_viewRoomsHandler
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton clearDBButton;
   private javax.swing.JButton reloadDBButton;
@@ -171,6 +190,7 @@ public class AdminPanel extends javax.swing.JPanel
   private javax.swing.JLabel roomsLabel;
   private javax.swing.JLabel status;
   private javax.swing.JLabel statusLabel;
+  private javax.swing.JScrollPane tableContainer;
   private javax.swing.JButton viewReservationsButton;
   private javax.swing.JButton viewRoomsButton;
   // End of variables declaration//GEN-END:variables
