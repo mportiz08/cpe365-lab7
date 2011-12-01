@@ -120,6 +120,26 @@ public class Admin
     return reservations.toArray(new Object[reservations.size()][reservations.size()]);
   }
   
+  public void clearDB()
+  {
+    clearTable("Reservations");
+    clearTable("Rooms");
+  }
+  
+  private void clearTable(String table)
+  {
+    try
+    {
+      Statement s = this.conn.createStatement();
+      s.executeUpdate("DELETE FROM " + table);
+    }
+    catch(SQLException e)
+    {
+      System.err.println("Error occured when clearing the " + table + " table.");
+      System.exit(1);
+    }
+  }
+  
   /**
    * Shortcut for executing queries and getting its results.
    * @param sql The SQL query.

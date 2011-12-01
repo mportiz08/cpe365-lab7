@@ -10,6 +10,7 @@ import javax.swing.*;
 public class AdminPanel extends javax.swing.JPanel
 {
   public static java.awt.Color GREEN = new java.awt.Color(61, 116, 94);
+  public static java.awt.Color RED = new java.awt.Color(255, 0, 0);
   private Connection conn;
   private Admin admin;
 
@@ -39,6 +40,10 @@ public class AdminPanel extends javax.swing.JPanel
     if(s.equals("full"))
     {
       this.status.setForeground(GREEN);
+    }
+    else
+    {
+      this.status.setForeground(RED);
     }
 
     this.status.setText(s);
@@ -110,6 +115,11 @@ public class AdminPanel extends javax.swing.JPanel
 
     clearDBButton.setText(resourceMap.getString("clearDBButton.text")); // NOI18N
     clearDBButton.setName("clearDBButton"); // NOI18N
+    clearDBButton.addMouseListener(new java.awt.event.MouseAdapter() {
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        clearDBHandler(evt);
+      }
+    });
 
     reloadDBButton.setText(resourceMap.getString("reloadDBButton.text")); // NOI18N
     reloadDBButton.setName("reloadDBButton"); // NOI18N
@@ -184,6 +194,12 @@ private void viewReservationsHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST
   this.tableContainer.setViewportView(table);
   table.setFillsViewportHeight(true);
 }//GEN-LAST:event_viewReservationsHandler
+
+private void clearDBHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearDBHandler
+  this.admin.clearDB();
+  updateStatus();
+  this.tableContainer.setViewportView(null);
+}//GEN-LAST:event_clearDBHandler
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton clearDBButton;
