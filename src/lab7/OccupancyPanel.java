@@ -52,7 +52,6 @@ public class OccupancyPanel extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         oneDate = new javax.swing.JButton();
         twoDate = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         RoomsTable = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -122,12 +121,9 @@ public class OccupancyPanel extends javax.swing.JPanel {
 
         twoDate.setText(resourceMap.getString("twoDate.text")); // NOI18N
         twoDate.setName("twoDate"); // NOI18N
-
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setName("jButton1"); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        twoDate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                twoDateActionPerformed(evt);
             }
         });
 
@@ -217,16 +213,14 @@ public class OccupancyPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addComponent(oneDate)
-                .addGap(192, 192, 192)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 372, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 637, Short.MAX_VALUE)
                 .addComponent(twoDate)
                 .addGap(203, 203, 203))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62))
         );
@@ -256,16 +250,19 @@ public class OccupancyPanel extends javax.swing.JPanel {
                             .addComponent(six, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)))
                     .addComponent(jLabel7))
-                .addGap(11, 11, 11)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(oneDate)
-                    .addComponent(twoDate)
-                    .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(oneDate)
+                            .addComponent(twoDate))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -277,23 +274,41 @@ private void oneDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     String dayString = this.two.getText();
     
     if(verifyDates(dayString, monthString)){
-        //Call model method
+        
+       AvailableRooms = this.owner.getAvailableRooms(monthString, Integer.parseInt(dayString));
+       for(int i = 0; i < RoomsModel.getRowCount(); i++){
+          if(AvailableRooms.contains(RoomsModel.getValueAt(i, 0).toString())){
+             RoomsModel.setValueAt("Occupied", i, 1);
+          }
+          else {
+            RoomsModel.setValueAt("Empty", i ,1);
+         }
+       }
     }
     else{
         System.out.println("Invalid date");
         System.exit(1);
     }
-    
-    AvailableRooms = this.owner.getAvailableRooms(monthString, Integer.parseInt(dayString));
-    for(int i = 0; i < RoomsModel.getRowCount(); i++){
-        if(AvailableRooms.contains(RoomsModel.getValueAt(i, 0).toString())){
-            RoomsModel.setValueAt("Occupied", i, 1);
-        }
-        else {
-            RoomsModel.setValueAt("Empty", i ,1);
-        }
-    }
 }//GEN-LAST:event_oneDateActionPerformed
+
+private void twoDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twoDateActionPerformed
+ 
+    System.out.println("Clicked two date button");
+    String monthString1 = this.three.getText();
+    String dayString1 = this.four.getText();
+    String monthString2 = this.five.getText();
+    String dayString2 = this.six.getText();
+    
+    if(verifyDates(dayString1, monthString1) && verifyDates(dayString2, monthString2)){
+        //Call Model method
+        //TODO
+        this.owner.getAvailableRooms2(monthString1, Integer.parseInt(dayString1), monthString2, Integer.parseInt(dayString2));
+    }
+    else{
+        System.out.println("Invalid date");
+        System.exit(1);
+    }
+}//GEN-LAST:event_twoDateActionPerformed
 
 private boolean verifyDates(String dayString, String monthString){
     String[] months = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
@@ -324,21 +339,10 @@ private boolean verifyDates(String dayString, String monthString){
     return false;
 }
 
-private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Object[] columnName = {"Rooms", "Availability"};
-        
-        //jTable1 = new JTable(new DefaultTableModel(owner.getAllRooms(), columnName));
-        //System.out.println(owner.getAllRooms()[0][9].toString());
-        
-        System.out.println("Setting up Occupancy Panel");
-    
-}//GEN-LAST:event_jButton1ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable RoomsTable;
     private javax.swing.JTextField five;
     private javax.swing.JTextField four;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

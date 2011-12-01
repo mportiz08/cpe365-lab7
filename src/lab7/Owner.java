@@ -87,4 +87,10 @@ public class Owner {
         
         return temp;
     }
+    
+    public ArrayList<ArrayList<String>> getAvailableRooms2(String month1, int day1, String month2, int day2){
+        //TODO
+        ArrayList<ArrayList<String>> temp = null;
+        return temp;
+    }
 }
