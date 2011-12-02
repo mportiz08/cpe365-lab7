@@ -5,7 +5,8 @@
  */
 package lab7;
 
-import java.sql.*;
+import java.awt.event.ActionEvent;
+import java.sql.Connection;
 
 /**
  *
@@ -13,13 +14,51 @@ import java.sql.*;
  */
 public class RevenuePanel extends javax.swing.JPanel
 {
-  private Connection conn;
+  private Revenue model;
+  
+  private class Refresher implements java.awt.event.ActionListener
+  {
+    private RevenuePanel view;
+    
+    public Refresher(RevenuePanel view)
+    {
+      this.view = view;
+    }
+    
+    public void actionPerformed(ActionEvent ae)
+    {
+      //System.out.println("refresh!");
+      view.refreshTable();
+    }
+  }
 
   /** Creates new form RevenuePanel */
   public RevenuePanel(Connection c)
   {
-    this.conn = c;
+    this.model = new Revenue(c);
     initComponents();
+    
+    this.revenueOption.addActionListener(new Refresher(this));
+    this.reservationsOption.addActionListener(new Refresher(this));
+    
+    this.displayOptions.add(this.revenueOption);
+    this.displayOptions.add(this.reservationsOption);
+    
+    refreshTable();
+  }
+  
+  private void refreshTable()
+  {
+    if(this.revenueOption.isSelected())
+    {
+      System.out.println("rev selected");
+      // TODO
+    }
+    else if(this.reservationsOption.isSelected())
+    {
+      System.out.println("res selected");
+      // TODO
+    }
   }
 
   /** This method is called from within the constructor to
@@ -31,7 +70,7 @@ public class RevenuePanel extends javax.swing.JPanel
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
-    buttonGroup1 = new javax.swing.ButtonGroup();
+    displayOptions = new javax.swing.ButtonGroup();
     titleLabel = new javax.swing.JLabel();
     tableContainer = new javax.swing.JScrollPane();
     revenueOption = new javax.swing.JRadioButton();
@@ -88,7 +127,7 @@ public class RevenuePanel extends javax.swing.JPanel
     );
   }// </editor-fold>//GEN-END:initComponents
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.ButtonGroup buttonGroup1;
+  private javax.swing.ButtonGroup displayOptions;
   private javax.swing.JRadioButton reservationsOption;
   private javax.swing.JRadioButton revenueOption;
   private javax.swing.JScrollPane tableContainer;

@@ -2,7 +2,7 @@
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    <Component class="javax.swing.ButtonGroup" name="displayOptions">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -30,7 +30,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="tableContainer" pref="880" max="32767" attributes="0"/>
+                      <Component id="tableContainer" pref="860" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -41,7 +41,7 @@
                       <Component id="revenueOption" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="reservationsOption" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="730" max="32767" attributes="0"/>
+                      <EmptySpace pref="677" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -59,7 +59,7 @@
               </Group>
               <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
               <Component id="tableContainer" min="-2" pref="431" max="-2" attributes="0"/>
-              <EmptySpace pref="43" max="32767" attributes="0"/>
+              <EmptySpace pref="32" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
