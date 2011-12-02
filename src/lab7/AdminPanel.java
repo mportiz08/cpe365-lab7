@@ -55,6 +55,18 @@ public class AdminPanel extends javax.swing.JPanel
       }
     }
   }
+  
+  private void showUserMsg(String msg)
+  {
+    JViewport view = new JViewport();
+    view.setView(makeUserMsg(msg));
+    this.tableContainer.setViewport(view);
+  }
+  
+  private JLabel makeUserMsg(String msg)
+  {
+    return new JLabel("<html><h2>" + msg + "</h2></html>", SwingConstants.CENTER);
+  }
 
   /** This method is called from within the constructor to
    * initialize the form.
@@ -221,7 +233,22 @@ private void clearDBHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cl
 }//GEN-LAST:event_clearDBHandler
 
 private void reloadDBHandler(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reloadDBHandler
+  Admin.Status s = this.admin.getDBStatus();
+  if(s == Admin.Status.NO_DB)
+  {
+    // TODO
+  }
+  else if(s == Admin.Status.FULL)
+  {
+    showUserMsg("The database is already full.");
+  }
+  else if(s == Admin.Status.EMPTY)
+  {
+    this.admin.reloadDB();
+    showUserMsg("Database reloaded successfully.");
+  }
   
+  updateStatus();
 }//GEN-LAST:event_reloadDBHandler
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
