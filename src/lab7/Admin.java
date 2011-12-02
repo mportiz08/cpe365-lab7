@@ -2,6 +2,7 @@ package lab7;
 
 import java.sql.*;
 import java.util.*;
+import java.io.*;
 
 /**
  * Admin -- implements the back end database work for AdminPanel
@@ -127,6 +128,58 @@ public class Admin
     clearTable("Rooms");
   }
   
+  public void reloadDB()
+  {
+    File f = new File("scripts/reload.sql");
+    Scanner s = null;
+    
+    try
+    {
+      s = new Scanner(f);
+    }
+    catch(FileNotFoundException e)
+    {
+      System.err.println("Couldn't find scripts/reload.sql.");
+      System.exit(1);
+    }
+    
+    Statement st = null;
+    try
+    {
+      st = this.conn.createStatement();
+    }
+    catch(SQLException e)
+    {
+      System.err.println("Error creating statement.");
+      System.exit(1);
+    }
+    
+    while(s.hasNextLine())
+    {
+      String sql = s.nextLine().split(";")[0];
+      //update(sql);
+      try
+      {
+        st.addBatch(sql);
+      }
+      catch(SQLException e)
+      {
+        System.err.println("Error adding statement to batch.");
+        System.exit(1);
+      }
+    }
+    
+    try
+    {
+      st.executeBatch();
+    }
+    catch(SQLException e)
+    {
+      System.err.println("Error executing batch statement.");
+      System.exit(1);
+    }
+  }
+  
   private boolean dbExists()
   {
     boolean roomsExists = false;
@@ -160,6 +213,21 @@ public class Admin
     }
   }
   
+  private void update(String sql)
+  {
+    try
+    {
+      Statement s = this.conn.createStatement();
+      s.executeUpdate(sql);
+    }
+    catch(SQLException e)
+    {
+      System.err.println("Error occured with the following SQL command:");
+      System.err.println(sql);
+      System.exit(1);
+    }
+  }
+  
   /**
    * Shortcut for executing queries and getting its results.
    * @param sql The SQL query.
@@ -176,7 +244,8 @@ public class Admin
     }
     catch(SQLException e)
     {
-      System.err.println("Error occured with SQL command.");
+      System.err.println("Error occured with the following SQL command:");
+      System.err.println(sql);
       System.exit(1);
     }
     
