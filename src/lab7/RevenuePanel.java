@@ -16,8 +16,9 @@ public class RevenuePanel extends javax.swing.JPanel
   private Connection conn;
 
   /** Creates new form RevenuePanel */
-  public RevenuePanel()
+  public RevenuePanel(Connection c)
   {
+    this.conn = c;
     initComponents();
   }
 

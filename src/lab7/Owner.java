@@ -37,6 +37,10 @@ public class Owner {
         return result;
     }
     
+    /**
+     * Returns the roomNames of all rooms
+     * @return 
+     */
     public Object[][] getAllRooms(){
        int i = 0;
        String stmt = "SELECT Name FROM Rooms";
@@ -63,7 +67,12 @@ public class Owner {
       return rooms;
     }
     
-    
+    /**
+     * Returns roomnames that are available on the given day
+     * @param month
+     * @param day
+     * @return 
+     */
     public ArrayList<String> getAvailableRooms(String month, int day){
         ArrayList<String> temp = new ArrayList<String>();
         String stmt = "SELECT Name FROM Rooms, Reservations WHERE " +
@@ -88,6 +97,14 @@ public class Owner {
         return temp;
     }
     
+    /**
+     * Returns an array of roomnames which are either fully or partially occupied between the input dates
+     * @param month1
+     * @param day1
+     * @param month2
+     * @param day2
+     * @return 
+     */
     public ArrayList<ArrayList<String>> getAvailableRooms2(String month1, int day1, String month2, int day2){
         //TODO
         ArrayList<ArrayList<String>> temp = new ArrayList<ArrayList<String>>();
@@ -178,6 +195,11 @@ public class Owner {
     
     }
     
+    /**
+     * Returns a reservation code given an SQL statement to execute
+     * @param stmt
+     * @return 
+     */
     public Integer[][] findReservation(String stmt){
         ArrayList<Integer> temp = new ArrayList<Integer>();
         int i = 0;
@@ -211,7 +233,11 @@ public class Owner {
         return reservations;
     }
     
-    
+    /**
+     * Returns info given a reservation code
+     * @param reservation Number
+     * @return 
+     */
     public Object[][] ReservationInfo(int resNum){
        ArrayList<Object[]> temp = new ArrayList<Object[]>();
        int i = 0;
