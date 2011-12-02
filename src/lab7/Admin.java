@@ -179,6 +179,38 @@ public class Admin
       System.exit(1);
     }
   }
+
+  public void createDB()
+  {
+    update("CREATE TABLE Rooms(" +
+              "Id           CHAR(3) PRIMARY KEY," +
+              "Name         VARCHAR2(50) UNIQUE," +
+              "Beds         INT," +
+              "BedType      VARCHAR2(10)," +
+              "MaxOccupancy INT," +
+              "BasePrice    INT," +
+              "Decor        VARCHAR2(20)" +
+           ")");
+    update("CREATE TABLE Reservations(" +
+              "Code      INT PRIMARY KEY," +
+              "Room      CHAR(3)," +
+              "CheckIn   DATE," +
+              "CheckOut  DATE," +
+              "Rate      FLOAT," +
+              "LastName  VARCHAR2(25)," +
+              "FirstName VARCHAR2(25)," +
+              "Adults    INT CHECK(Adults >= 1)," +
+              "Kids      INT," +
+              "FOREIGN KEY(Room) REFERENCES Rooms," +
+              "CONSTRAINT NoDupes UNIQUE(Room, CheckIn)" +
+            ")");
+  }
+
+  public void removeDB()
+  {
+    update("DROP TABLE Reservations");
+    update("DROP TABLE Rooms");
+  }
   
   private boolean dbExists()
   {
