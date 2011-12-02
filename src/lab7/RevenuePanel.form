@@ -22,10 +22,18 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="346" max="32767" attributes="0"/>
-              <Component id="jLabel1" min="-2" pref="248" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="306" max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="tableContainer" pref="860" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="titleLabel" min="-2" pref="248" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="306" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -33,19 +41,28 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" pref="49" max="-2" attributes="0"/>
-              <EmptySpace pref="540" max="32767" attributes="0"/>
+              <Component id="titleLabel" min="-2" pref="49" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="tableContainer" min="-2" pref="491" max="-2" attributes="0"/>
+              <EmptySpace pref="32" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="jLabel1">
+    <Component class="javax.swing.JLabel" name="titleLabel">
       <Properties>
-        <Property name="font" type="java.awt.Font" resourceKey="jLabel1.font"/>
-        <Property name="text" type="java.lang.String" resourceKey="jLabel1.text"/>
-        <Property name="name" type="java.lang.String" value="jLabel1" noResource="true"/>
+        <Property name="font" type="java.awt.Font" resourceKey="titleLabel.font"/>
+        <Property name="text" type="java.lang.String" resourceKey="titleLabel.text"/>
+        <Property name="name" type="java.lang.String" value="titleLabel" noResource="true"/>
       </Properties>
     </Component>
+    <Container class="javax.swing.JScrollPane" name="tableContainer">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="tableContainer" noResource="true"/>
+      </Properties>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+    </Container>
   </SubComponents>
 </Form>
