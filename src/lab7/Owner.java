@@ -91,7 +91,13 @@ public class Owner {
     public ArrayList<ArrayList<String>> getAvailableRooms2(String month1, int day1, String month2, int day2){
         //TODO
         ArrayList<ArrayList<String>> temp = null;
-        
+
+        String FullyStmt = "SELECT Name FROM Rooms, Reservations " +
+                "WHERE Id = Room AND to_date('" + day1 + "-" + month1 +
+                "-10','DD-MM-YY') >= Checkin AND to_date('" + day2 + "-" +
+                month2 + "-10','DD-MM-YY') <= Checkout";
+
+        System.out.println(FullyStmt);
         
         /*
          * FULLY OCCUPIED
@@ -99,20 +105,50 @@ public class Owner {
          *  WHERE roomid = room AND to_date('23-NOV-10','DD-MM-YY') >= checkin 
          *  to_date('24-NOV-10','DD-MM-YY') <= checkout;
          */
-        
+
+        String PartialStmt = "SELECT Name from Rooms, Reservations " +
+                "WHERE Id = Room AND " +
+                "to_date('" + day1 + "-" + month1 + "-10','DD-MM-YY') > checkin " +
+                "AND to_date('" + day1 + "-" + month1 + "-10','DD-MM-YY') < checkout " +
+                "AND to_date('" + day2 + "-" + month2 + "-10','DD-MM-YY') >= checkout) " +
+                "UNION " +
+                "SELECT Name from Rooms, Reservations " +
+                "WHERE Id = room AND " +
+                "(to_date('" + day1 + "-" + month1 + "-10','DD-MM-YY') <= checkin " +
+                "AND to_date('" + day2 + "-" + month2 + "-10','DD-MM-YY') > checkin " +
+                "AND to_date('" + day2 + "-" + month2 + "-10','DD-MM-YY') < checkout)";
+
+        System.out.println(PartialStmt);
+
+        ResultSet full = execute(FullyStmt);
+        ResultSet partial = execute(PartialStmt);
+
+        try {
+           boolean f = full.next();
+           while(f){
+               temp.get(0).add(full.getString("Name"));
+               f = full.next();
+           }
+
+        }
+        catch(SQLException ex){
+            System.err.println("Error getting data from DB");
+            System.exit(1);
+        }
+
         /*
          * PARTIALLY OCCUPIED
          * SELECT roomname from rooms, reservations
-WHERE roomid = room AND 
-(to_date('17-NOV-10','DD-MM-YY') > checkin
-AND to_date('17-NOV-10','DD-MM-YY') < checkout
-AND to_date('20-NOV-10','DD-MM-YY') >= checkout)
-UNION
-SELECT roomname from rooms, reservations 
-WHERE roomid = room AND
-(to_date('17-NOV-10','DD-MM-YY') <= checkin
-AND to_date('20-NOV-10','DD-MM-YY') > checkin
-AND to_date('20-NOV-10','DD-MM-YY') < checkout);
+         *   WHERE roomid = room AND
+         *   (to_date('17-NOV-10','DD-MM-YY') > checkin
+         *   AND to_date('17-NOV-10','DD-MM-YY') < checkout
+         *   AND to_date('20-NOV-10','DD-MM-YY') >= checkout)
+         *   UNION
+         *   SELECT roomname from rooms, reservations
+         *   WHERE roomid = room AND
+         *   (to_date('17-NOV-10','DD-MM-YY') <= checkin
+         *   AND to_date('20-NOV-10','DD-MM-YY') > checkin
+         *   AND to_date('20-NOV-10','DD-MM-YY') < checkout);
          */
         
         return temp;
