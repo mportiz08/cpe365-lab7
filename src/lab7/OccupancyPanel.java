@@ -11,6 +11,10 @@
 package lab7;
 
 import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,12 +22,50 @@ import javax.swing.table.DefaultTableModel;
  * @author spartan
  */
 public class OccupancyPanel extends javax.swing.JPanel {
+    
+    /**
+     * Private Class for Listening for Row Selections in the DB table
+     */
+    private class RoomsSelectionListener implements ListSelectionListener {
+
+        private JTable table;
+        
+        RoomsSelectionListener(JTable table1) {
+           this.table = table1;
+        }
+        public void valueChanged(ListSelectionEvent e) {
+           int row;
+           if (table.getRowSelectionAllowed() && !table.getColumnSelectionAllowed() && !e.getValueIsAdjusting()) {
+              row = table.getSelectedRow();
+              System.out.println("Selected Room: " + RoomsModel.getValueAt(row, 0));
+                
+              if("Occupied".equals(RoomsModel.getValueAt(row, 1).toString())){
+                 int resNumber;
+                 //Object method to find reservation
+                 Object[][] reservations = owner.findReservation(RoomsModel.getValueAt(row, 0).toString(), one.getText(), Integer.parseInt(two.getText()));
+                 resNumber = Integer.parseInt(reservations[0][0].toString());
+                 Object[] ReservationsName = {"Reservation(s)"};
+                 ReservationsTable.setModel(new DefaultTableModel(reservations, ReservationsName));
+                 
+                 //Object method to find reservation details
+                 Object[][] info = owner.ReservationInfo(resNumber);
+                 Object[] InfoName = {"Code", "Room", "Checkin", "Checkout", "Rate", "Lastname", "Firstname", "Adults", "Kids"};
+                 InfoTable.setModel(new DefaultTableModel(info, InfoName));
+              }
+           }
+       }
+    }
+    
 
     /** Creates new form OccupancyPanel */
     public OccupancyPanel(Owner owner) {
         this.owner = owner;  
         Object[] columnName = {"Rooms", "Availability"};
+        Object[] ReservationsName = {"Reservations"};
+        Object[] InfoName = {"Info"};
         RoomsModel = new DefaultTableModel(owner.getAllRooms(), columnName);
+        ReservationsModel = new DefaultTableModel(new Object[0][0], ReservationsName);
+        InfoModel = new DefaultTableModel(new Object[0][0], InfoName);
         initComponents();
         
     }
@@ -55,9 +97,9 @@ public class OccupancyPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         RoomsTable = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        ReservationsTable = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        InfoTable = new javax.swing.JTable();
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(900, 600));
@@ -138,39 +180,21 @@ public class OccupancyPanel extends javax.swing.JPanel {
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTable2.setName("jTable2"); // NOI18N
-        jTable2.setRowHeight(30);
-        jTable2.setRowMargin(5);
-        jScrollPane2.setViewportView(jTable2);
+        ReservationsTable.setModel(ReservationsModel);
+        ReservationsTable.setName("ReservationsTable"); // NOI18N
+        ReservationsTable.setRowHeight(30);
+        ReservationsTable.setRowMargin(5);
+        ReservationsTable.setSelectionBackground(resourceMap.getColor("ReservationsTable.selectionBackground")); // NOI18N
+        jScrollPane2.setViewportView(ReservationsTable);
 
-        jScrollPane3.setName("jScrollPane3"); // NOI18N
+        jScrollPane4.setName("jScrollPane4"); // NOI18N
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTable3.setName("jTable3"); // NOI18N
-        jTable3.setRowHeight(30);
-        jTable3.setRowMargin(5);
-        jScrollPane3.setViewportView(jTable3);
+        InfoTable.setModel(InfoModel);
+        InfoTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        InfoTable.setName("InfoTable"); // NOI18N
+        InfoTable.setRowHeight(30);
+        InfoTable.setRowMargin(5);
+        jScrollPane4.setViewportView(InfoTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -216,13 +240,13 @@ public class OccupancyPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 637, Short.MAX_VALUE)
                 .addComponent(twoDate)
                 .addGap(203, 203, 203))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,19 +274,15 @@ public class OccupancyPanel extends javax.swing.JPanel {
                             .addComponent(six, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)))
                     .addComponent(jLabel7))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(oneDate)
-                            .addComponent(twoDate))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(oneDate)
+                    .addComponent(twoDate))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -289,11 +309,16 @@ private void oneDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
         System.out.println("Invalid date");
         System.exit(1);
     }
+    
+    RoomsTable.setRowSelectionAllowed(true);
+    RoomsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    RoomsTable.getSelectionModel().addListSelectionListener(new RoomsSelectionListener(RoomsTable));
 }//GEN-LAST:event_oneDateActionPerformed
 
 private void twoDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twoDateActionPerformed
  
     System.out.println("Clicked two date button");
+    ArrayList<ArrayList<String>> results = null;
     String monthString1 = this.three.getText();
     String dayString1 = this.four.getText();
     String monthString2 = this.five.getText();
@@ -301,8 +326,18 @@ private void twoDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST
     
     if(verifyDates(dayString1, monthString1) && verifyDates(dayString2, monthString2)){
         //Call Model method
-        //TODO
-        this.owner.getAvailableRooms2(monthString1, Integer.parseInt(dayString1), monthString2, Integer.parseInt(dayString2));
+        results = this.owner.getAvailableRooms2(monthString1, Integer.parseInt(dayString1), monthString2, Integer.parseInt(dayString2));
+        for(int i = 0; i < RoomsModel.getRowCount(); i++){
+            if(results.get(0).contains(RoomsModel.getValueAt(i, 0).toString())){
+                RoomsModel.setValueAt("Fully Occupied", i, 1);
+            }
+            else if(results.get(1).contains(RoomsModel.getValueAt(i, 0).toString())){
+                RoomsModel.setValueAt("Partially Occupied", i, 1);
+            }
+            else{
+                RoomsModel.setValueAt("Empty", i, 1);
+            }
+        }
     }
     else{
         System.out.println("Invalid date");
@@ -340,6 +375,8 @@ private boolean verifyDates(String dayString, String monthString){
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable InfoTable;
+    private javax.swing.JTable ReservationsTable;
     private javax.swing.JTable RoomsTable;
     private javax.swing.JTextField five;
     private javax.swing.JTextField four;
@@ -353,8 +390,7 @@ private boolean verifyDates(String dayString, String monthString){
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextField one;
     private javax.swing.JButton oneDate;
     private javax.swing.JTextField six;
@@ -364,4 +400,6 @@ private boolean verifyDates(String dayString, String monthString){
     // End of variables declaration//GEN-END:variables
     private Owner owner;
     private DefaultTableModel RoomsModel;
+    private DefaultTableModel ReservationsModel;
+    private DefaultTableModel InfoModel;
 }
