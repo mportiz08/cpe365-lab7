@@ -154,7 +154,7 @@ private void OccupancyButtonActionPerformed(java.awt.event.ActionEvent evt) {//G
 private void RevenueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RevenueButtonActionPerformed
     
     System.out.println(01 == 1);
-    RevenuePanel revenue = new RevenuePanel();
+    RevenuePanel revenue = new RevenuePanel(this.conn);
     ContentPane.setContentPane(revenue);
     ContentPane.setVisible(true);
     
@@ -163,7 +163,7 @@ private void RevenueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN
 private void ReservationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReservationsButtonActionPerformed
 
     System.out.println("Reservations Button");
-    ReservationsPanel reservations = new ReservationsPanel();
+    ReservationsPanel reservations = new ReservationsPanel(owner);
     ContentPane.setContentPane(reservations);
     ContentPane.setVisible(true);
 }//GEN-LAST:event_ReservationsButtonActionPerformed
