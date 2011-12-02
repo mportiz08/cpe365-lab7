@@ -94,8 +94,8 @@ public class Owner {
 
         String FullyStmt = "SELECT DISTINCT Name FROM Rooms, Reservations " +
                 "WHERE Id = Room AND to_date('" + day1 + "-" + month1 +
-                "-10','DD-MM-YY') <= Checkin AND to_date('" + day2 + "-" +
-                month2 + "-10','DD-MM-YY') >= Checkout";
+                "-10','DD-MM-YY') >= Checkin AND to_date('" + day2 + "-" +
+                month2 + "-10','DD-MM-YY') <= Checkout";
 
         System.out.println(FullyStmt);
         
@@ -122,15 +122,22 @@ public class Owner {
 
         String PartialStmt = "SELECT DISTINCT Name from Rooms, Reservations " +
                 "WHERE Id = Room AND " +
-                "to_date('" + day1 + "-" + month1 + "-10','DD-MM-YY') > checkin " +
+                "to_date('" + day1 + "-" + month1 + "-10','DD-MM-YY') >= checkin " +
                 "AND to_date('" + day1 + "-" + month1 + "-10','DD-MM-YY') < checkout " +
-                "AND to_date('" + day2 + "-" + month2 + "-10','DD-MM-YY') >= checkout " +
+                "AND to_date('" + day2 + "-" + month2 + "-10','DD-MM-YY') > checkout " +
                 "UNION " +
                 "SELECT DISTINCT Name from Rooms, Reservations " +
                 "WHERE Id = room AND " +
-                "(to_date('" + day1 + "-" + month1 + "-10','DD-MM-YY') <= checkin " +
+                "(to_date('" + day1 + "-" + month1 + "-10','DD-MM-YY') < checkin " +
+                "AND to_date('" + day2 + "-" + month2 + "-10','DD-MM-YY') >= checkin " +
+                "AND to_date('" + day2 + "-" + month2 + "-10','DD-MM-YY') < checkout) " +
+                "UNION " +
+                "SELECT DISTINCT Name from Rooms, Reservations " +
+                "WHERE Id = room AND " +
+                "to_date('" + day1 + "-" + month1 + "-10','DD-MM-YY') <= checkin " +
+                "AND to_date('" + day1 + "-" + month1 + "-10','DD-MM-YY') < checkout " +
                 "AND to_date('" + day2 + "-" + month2 + "-10','DD-MM-YY') > checkin " +
-                "AND to_date('" + day2 + "-" + month2 + "-10','DD-MM-YY') < checkout)";
+                "AND to_date('" + day2 + "-" + month2 + "-10','DD-MM-YY') >= checkout";
 
         System.out.println(PartialStmt);
 
@@ -171,14 +178,14 @@ public class Owner {
     
     }
     
-    public Object[][] findReservation(String roomName, String month, int day){
+    public Integer[][] findReservation(String stmt){
         ArrayList<Integer> temp = new ArrayList<Integer>();
         int i = 0;
-        String stmt = "SELECT Code from rooms, reservations WHERE Room = Id" +
+        /*String stmt = "SELECT Code from rooms, reservations WHERE Room = Id" +
                 " AND Name = " + "'" + roomName + "'" + " AND to_date('" + day + "-" + month + 
                 "-10','DD-MM-YY') >= CheckIn AND to_date('" + day + "-" + month +
                 "-10','DD-MM-YY') < CheckOut";
-        
+        */
         System.out.println(stmt);
         
         ResultSet results = execute(stmt);
@@ -196,13 +203,14 @@ public class Owner {
             System.exit(1);
         }
         
-        Object[][] reservations = new Object[temp.size()][1];
+        Integer[][] reservations = new Integer[temp.size()][1];
         for(i = 0; i < temp.size(); i++){
             reservations[i][0] = temp.get(i);
         }
         
         return reservations;
     }
+    
     
     public Object[][] ReservationInfo(int resNum){
        ArrayList<Object[]> temp = new ArrayList<Object[]>();

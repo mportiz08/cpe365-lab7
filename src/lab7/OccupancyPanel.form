@@ -292,6 +292,7 @@
               <Connection code="InfoModel" type="code"/>
             </Property>
             <Property name="autoResizeMode" type="int" value="0"/>
+            <Property name="fillsViewportHeight" type="boolean" value="true"/>
             <Property name="name" type="java.lang.String" value="InfoTable" noResource="true"/>
             <Property name="rowHeight" type="int" value="30"/>
             <Property name="rowMargin" type="int" value="5"/>
