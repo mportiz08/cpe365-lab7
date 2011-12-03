@@ -50,7 +50,7 @@ public class RevenuePanel extends javax.swing.JPanel
   
   private void refreshTable()
   {
-    if(true) return; // remove me later
+    //if(true) return; // remove me later
     
     if(this.revenueOption.isSelected())
     {
