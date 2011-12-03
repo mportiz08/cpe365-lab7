@@ -123,7 +123,7 @@ public class Revenue
       row.add(total);
       ret.add(row.toArray(new Object[row.size()]));
     }
-    return ret.toArray(new Object[ret.size()][rows.size()]);
+    return ret.toArray(new Object[ret.size()][ret.size()]);
   }
   
   private Object[][] getRevCounts()
@@ -181,7 +181,23 @@ public class Revenue
       row.add(total);
       ret.add(row.toArray(new Object[row.size()]));
     }
-    return ret.toArray(new Object[ret.size()][rows.size()]);
+
+    // total row
+    Object[] totalRow = new Object[COLS.length + 2];
+    totalRow[0] = "Totals";
+    for(int i = 1; i < totalRow.length; i++)
+    {
+      double total = 0;
+      for(Object[] row : ret)
+      {
+        total += (Double)row[i];
+      }
+      totalRow[i] = total;
+    }
+    System.out.println(totalRow.length);
+    ret.add(totalRow);
+
+    return ret.toArray(new Object[ret.size()][ret.size()]);
   }
   
   private ArrayList<Object[]> getRows(String sql, String numType)
