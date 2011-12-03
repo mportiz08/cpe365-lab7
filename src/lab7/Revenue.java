@@ -59,7 +59,6 @@ public class Revenue
   public Revenue(Connection c)
   {
     this.conn = c;
-    //System.out.println(this.getRevCounts()[0][0]);
   }
   
   public AbstractTableModel getResTable()
@@ -74,8 +73,53 @@ public class Revenue
   
   private Object[][] getResCounts()
   {
-    ArrayList<Object[]> rows = getRows("CHANGE ME", "res");
-    return rows.toArray(new Object[rows.size()][rows.size()]);
+    String sql =
+     "SELECT RM.Name, TO_CHAR(RS.CheckIn, 'MON') AS Month, COUNT(*) " +
+     "FROM Reservations RS, Rooms RM " +
+     "WHERE RS.Room = RM.Id " +
+     "GROUP BY Name, TO_CHAR(RS.CheckIn, 'MON') " +
+     "ORDER BY Name, Month";
+    ArrayList<Object[]> rows = getRows(sql, "res");
+
+    TreeMap<String, ArrayList<Object[]>> data = new TreeMap<String, ArrayList<Object[]>>();
+
+    for(Object[] r : rows)
+    {
+      String name = (String)r[0];
+      String month = (String)r[1];
+      Integer res = (Integer)r[2];
+
+      Object[] monthly = new Object[2];
+      monthly[0] = month;
+      monthly[1] = res;
+      if(data.get(name) == null)
+      {
+        ArrayList<Object[]> monthlies = new ArrayList<Object[]>();
+        monthlies.add(monthly);
+        data.put(name, monthlies);
+      }
+      else
+      {
+        ArrayList<Object[]> monthlies = data.get(name);
+        monthlies.add(monthly);
+        data.put(name, monthlies);
+      }
+    }
+
+    ArrayList<Object[]> ret = new ArrayList<Object[]>();
+    for(Map.Entry<String, ArrayList<Object[]>> r : data.entrySet())
+    {
+      ArrayList<Object> row = new ArrayList<Object>();
+      row.add(r.getKey());
+      int i = 0;
+      for(String m : COLS)
+      {
+        row.add(r.getValue().get(i)[1]);
+        i++;
+      }
+      ret.add(row.toArray(new Object[row.size()]));
+    }
+    return ret.toArray(new Object[ret.size()][rows.size()]);
   }
   
   private Object[][] getRevCounts()
@@ -98,7 +142,6 @@ public class Revenue
       String name = (String)r[0];
       String month = (String)r[1];
       Double rev = (Double)r[2];
-      //System.out.println(name + " " + month + " " + rev);
       
       Object[] monthly = new Object[2];
       monthly[0] = month;
@@ -116,7 +159,6 @@ public class Revenue
         data.put(name, monthlies);
       }
     }
-    System.out.println(data.get("Abscond or bolster").get(0));
 
     ArrayList<Object[]> ret = new ArrayList<Object[]>();
     for(Map.Entry<String, ArrayList<Object[]>> r : data.entrySet())
@@ -132,7 +174,6 @@ public class Revenue
       ret.add(row.toArray(new Object[row.size()]));
     }
     return ret.toArray(new Object[ret.size()][rows.size()]);
-    //return rows.toArray(new Object[rows.size()][rows.size()]);
   }
   
   private ArrayList<Object[]> getRows(String sql, String numType)
