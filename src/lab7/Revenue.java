@@ -123,6 +123,21 @@ public class Revenue
       row.add(total);
       ret.add(row.toArray(new Object[row.size()]));
     }
+
+    // total row
+    Object[] totalRow = new Object[COLS.length + 2];
+    totalRow[0] = "Totals";
+    for(int i = 1; i < totalRow.length; i++)
+    {
+      int total = 0;
+      for(Object[] row : ret)
+      {
+        total += (Integer)row[i];
+      }
+      totalRow[i] = total;
+    }
+    ret.add(totalRow);
+
     return ret.toArray(new Object[ret.size()][ret.size()]);
   }
   
@@ -194,7 +209,6 @@ public class Revenue
       }
       totalRow[i] = total;
     }
-    System.out.println(totalRow.length);
     ret.add(totalRow);
 
     return ret.toArray(new Object[ret.size()][ret.size()]);
