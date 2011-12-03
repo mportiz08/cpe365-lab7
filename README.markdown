@@ -6,19 +6,20 @@
 
 **Team Members:**
 
-* Sam
-* Marcus
-* Alan  
-
-*Due sometime Friday 12/2/11*
+* Sam Becker
+* Marcus Ortiz
+* Alan Yang
 
 ## Usage
 
-to compile and run the app:
+If you have `ant` installed, the easiest way to run the program from the command line is:
 
-    ant clean
     ant run
+
+(If for some reason, the `dist/` folder doesn't exist, use `ant` without arguments to compile the program)
 
 don't have `ant` installed? try this instead
 
     java -jar dist/lab7.jar
+
+If all else fails, we used netbeans to create the app, so you can just open the root folder for the project with netbeans and run it there (shouldn't be necessary).
