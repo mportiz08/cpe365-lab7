@@ -79,7 +79,7 @@ public class Owner {
                 "Room = Id AND to_date('" + day + "-" + month + 
                 "-10','DD-MM-YY') >= CheckIn AND to_date('" + day + "-" + month +
                 "-10','DD-MM-YY') < CheckOut";
-        System.out.println(stmt);
+        
         ResultSet results = execute(stmt);
         
         try {
@@ -114,7 +114,6 @@ public class Owner {
                 "-10','DD-MM-YY') >= Checkin AND to_date('" + day2 + "-" +
                 month2 + "-10','DD-MM-YY') <= Checkout";
 
-        System.out.println(FullyStmt);
         
         /*
          * FULLY OCCUPIED
@@ -156,7 +155,6 @@ public class Owner {
                 "AND to_date('" + day2 + "-" + month2 + "-10','DD-MM-YY') > checkin " +
                 "AND to_date('" + day2 + "-" + month2 + "-10','DD-MM-YY') >= checkout";
 
-        System.out.println(PartialStmt);
 
         ResultSet full = execute(FullyStmt);
         ResultSet partial = execute(PartialStmt);
@@ -184,19 +182,12 @@ public class Owner {
         temp.add(fulltemp);
         temp.add(partialtemp);
         
-        for(ArrayList<String> o : temp){
-            System.out.println("----Set----");
-            for(String s : o){
-                System.out.println(s);
-            }
-        }
-        
         return temp;
     
     }
     
     /**
-     * Returns a reservation code given an SQL statement to execute
+     * Returns a reservation code(s) given an SQL statement to execute
      * @param stmt
      * @return 
      */
@@ -208,7 +199,6 @@ public class Owner {
                 "-10','DD-MM-YY') >= CheckIn AND to_date('" + day + "-" + month +
                 "-10','DD-MM-YY') < CheckOut";
         */
-        System.out.println(stmt);
         
         ResultSet results = execute(stmt);
         
@@ -243,8 +233,6 @@ public class Owner {
        int i = 0;
        String stmt = "SELECT * from reservations WHERE code = " + resNum;
         
-       System.out.println(stmt);
-        
        ResultSet results = execute(stmt);
         
        try {
@@ -272,11 +260,7 @@ public class Owner {
           System.exit(1);
        }
        
-       for(Object[] a : temp){
-          for (int j = 0; j < a.length; j++){
-              System.out.println(a[j]);
-          }
-       }
+       
        return temp.toArray(new Object[temp.size()][temp.size()]);
   }
 }

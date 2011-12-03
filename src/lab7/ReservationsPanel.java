@@ -10,6 +10,10 @@
  */
 package lab7;
 
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,11 +23,44 @@ import javax.swing.table.DefaultTableModel;
 public class ReservationsPanel extends javax.swing.JPanel {
 
     private Owner owner;
+    
+    /**
+     * Private Class for Listening for Row Selections for 1 Date
+     */
+    private class ReservationsSelectionListener implements ListSelectionListener {
+
+        private JTable table;
+        
+        ReservationsSelectionListener(JTable table1) {
+           this.table = table1;
+        }
+        public void valueChanged(ListSelectionEvent e) {
+           int row = 0;
+           if (table.getRowSelectionAllowed() && !table.getColumnSelectionAllowed() && !e.getValueIsAdjusting()) {
+              row = table.getSelectedRow();
+          
+              int resNum = Integer.parseInt(ReservationsModel.getValueAt(row, 0).toString());
+              Object[][] info = owner.ReservationInfo(resNum);
+              if(InfoModel.getRowCount() == 0){
+                InfoModel.addRow(info[0]);
+              }
+              else{
+                  for(int i = 0; i < InfoModel.getRowCount(); i++){
+                      InfoModel.removeRow(i);
+                  }
+                  InfoModel.addRow(info[0]);
+              }
+           }
+        }
+    }
+    
     /** Creates new form ReservationsPanel */
     public ReservationsPanel(Owner own) {
         this.owner = own;
         Object[] ReservationsName = {"Reservations"};
+        Object[] InfoName = {"Code", "Room", "Checkin", "Checkout", "Rate", "Lastname", "Firstname", "Adults", "Kids"};
         ReservationsModel = new DefaultTableModel(new Object[0][0], ReservationsName);
+        InfoModel = new DefaultTableModel(new Object[0][0], InfoName);
         initComponents();
     }
     
@@ -95,22 +132,19 @@ public class ReservationsPanel extends javax.swing.JPanel {
 
         ReservationsTable.setModel(ReservationsModel);
         ReservationsTable.setName("ReservationsTable"); // NOI18N
+        ReservationsTable.setRowHeight(30);
+        ReservationsTable.setRowMargin(5);
+        ReservationsTable.setSelectionBackground(resourceMap.getColor("ReservationsTable.selectionBackground")); // NOI18N
         jScrollPane1.setViewportView(ReservationsTable);
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
-        InfoTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        InfoTable.setModel(InfoModel);
+        InfoTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        InfoTable.setFillsViewportHeight(true);
         InfoTable.setName("InfoTable"); // NOI18N
+        InfoTable.setRowHeight(30);
+        InfoTable.setRowMargin(5);
         jScrollPane2.setViewportView(InfoTable);
 
         jToggleButton1.setText(resourceMap.getString("jToggleButton1.text")); // NOI18N
@@ -202,12 +236,46 @@ public class ReservationsPanel extends javax.swing.JPanel {
 private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
 // TODO add your handling code here:
     System.out.println("ReservationsPanel button pooshed");
-    String stmt = "SELECT Code from rooms, reservations WHERE Checkin < " + 
+    String stmt = "SELECT DISTINCT Code from rooms, reservations WHERE Checkin > " + 
             "to_date('" + Integer.parseInt(two.getText()) + "-" + one.getText() + 
             "-10','DD-MM-YY') " + 
-            "AND Checkout > to_date('" + Integer.parseInt(two.getText()) + "-" + 
-            one.getText() + "-10','DD-MM-YY')";
-    Object[][] reservations = owner.findReservation(stmt);
+            "AND Checkin < to_date('" + Integer.parseInt(four.getText()) + "-" + 
+            three.getText() + "-10','DD-MM-YY')";
+    Integer[][] reservations = owner.findReservation(stmt);
+
+    if(ReservationsModel.getRowCount() != 0){   
+       for(int j = 0; j < ReservationsModel.getRowCount(); j++) {
+          ReservationsModel.removeRow(j);
+       }
+       ReservationsModel.fireTableRowsDeleted(ERROR, ERROR);
+    }
+    
+    for(Integer[] i : reservations){
+       ReservationsModel.addRow(i);
+    }
+    ReservationsModel.fireTableChanged(null);
+    /*for(Integer[] i : reservations){
+        System.out.println("In reservations loop");
+        if(ReservationsModel.getRowCount() == 0){
+            System.out.println("found empty table");
+            ReservationsModel.addRow(i);
+        }
+        else{
+           boolean flag = false;
+           for(int j = 0; j < ReservationsModel.getRowCount(); j++) {
+              if(i[0].equals(ReservationsModel.getValueAt(j, 0))){
+                 flag = true;
+              }
+           }
+           if(!flag){
+               ReservationsModel.addRow(i);
+           }
+        }
+    }*/
+    
+    ReservationsTable.setRowSelectionAllowed(true);
+    ReservationsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    ReservationsTable.getSelectionModel().addListSelectionListener(new ReservationsSelectionListener(ReservationsTable));
 }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -228,4 +296,5 @@ private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GE
     private javax.swing.JTextField two;
     // End of variables declaration//GEN-END:variables
     private DefaultTableModel ReservationsModel;
+    private DefaultTableModel InfoModel;
 }    

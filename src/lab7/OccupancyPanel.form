@@ -37,7 +37,7 @@
                       <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="300" max="32767" attributes="0"/>
+              <EmptySpace pref="289" max="32767" attributes="0"/>
               <Component id="three" min="-2" pref="72" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
               <Component id="four" min="-2" pref="79" max="-2" attributes="0"/>
@@ -61,12 +61,12 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="318" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="248" max="-2" attributes="0"/>
-              <EmptySpace pref="413" max="32767" attributes="0"/>
+              <EmptySpace pref="334" max="32767" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
               <Component id="oneDate" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="637" max="32767" attributes="0"/>
+              <EmptySpace pref="626" max="32767" attributes="0"/>
               <Component id="twoDate" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="203" max="-2" attributes="0"/>
           </Group>
@@ -76,7 +76,7 @@
               <Component id="jScrollPane2" min="-2" pref="104" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jScrollPane4" min="-2" pref="506" max="-2" attributes="0"/>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -119,9 +119,9 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane4" pref="427" max="32767" attributes="0"/>
-                  <Component id="jScrollPane2" alignment="1" pref="427" max="32767" attributes="0"/>
-                  <Component id="jScrollPane1" alignment="1" pref="427" max="32767" attributes="0"/>
+                  <Component id="jScrollPane4" pref="423" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" alignment="1" pref="423" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="1" pref="423" max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>

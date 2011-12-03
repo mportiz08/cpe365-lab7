@@ -75,9 +75,7 @@ public class OccupancyPanel extends javax.swing.JPanel {
         public void valueChanged(ListSelectionEvent e) {
            int row;
            if (table.getRowSelectionAllowed() && !table.getColumnSelectionAllowed() && !e.getValueIsAdjusting()) {
-              row = table.getSelectedRow();
-              System.out.println("Selected Room: " + RoomsModel.getValueAt(row, 0));
-                
+              row = table.getSelectedRow();                
               if("Fully Occupied".equals(RoomsModel.getValueAt(row, 1).toString())){
                  int resNumber;
                  String FullyStmt = "SELECT Code FROM Rooms, Reservations " +
