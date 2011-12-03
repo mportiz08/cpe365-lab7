@@ -107,7 +107,7 @@ public class GuestPanel extends javax.swing.JPanel
 private void ratesMethod(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ratesMethod
     // TODO add your handling code here:
     System.out.println("Clicked Rooms/Rates Button");
-    RoomsRatesPanel rooms_rates = new RoomsRatesPanel(guest);
+    RoomsRatesPanel rooms_rates = new RoomsRatesPanel(guest, conn);
     ContentPane.setContentPane(rooms_rates);
     ContentPane.setVisible(true);
 }//GEN-LAST:event_ratesMethod
@@ -115,7 +115,7 @@ private void ratesMethod(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rates
 private void Reservations2ButtonActionPerformed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Reservations2ButtonActionPerformed
     // TODO add your handling code here:
     System.out.println("Reservations Button");
-    Reservations2Panel reservations2 = new Reservations2Panel();
+    Reservations2Panel reservations2 = new Reservations2Panel(guest, conn);
     ContentPane.setContentPane(reservations2);
     ContentPane.setVisible(true);
 }//GEN-LAST:event_Reservations2ButtonActionPerformed
