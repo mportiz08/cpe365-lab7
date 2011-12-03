@@ -8,16 +8,19 @@ import javax.swing.table.AbstractTableModel;
  * @author Marcus Ortiz
  */
 public class Revenue
-{
+{ 
   private class BaseTableModel extends AbstractTableModel
   {
     private Object[][] data;
     private String[] cols;
 
-    public BaseTableModel(Object[][] data, String[] cols)
+    public BaseTableModel(Object[][] data)
     {
       this.data = data;
-      this.cols = cols;
+      String[] columns = {"Room", "Jan", "Feb", "March", "April", "May", "June",
+                          "July", "August", "September", "October", "November",
+                          "December", "Total"};
+      this.cols = columns;
     }
 
     public Object getValueAt(int row, int col)
@@ -57,15 +60,13 @@ public class Revenue
   
   public AbstractTableModel getResTable()
   {
-    String[] cols = {};
     Object[][] data = {};
-    return new BaseTableModel(data, cols);
+    return new BaseTableModel(data);
   }
   
   public AbstractTableModel getRevTable()
   {
-    String[] cols = {};
     Object[][] data = {};
-    return new BaseTableModel(data, cols);
+    return new BaseTableModel(data);
   }
 }

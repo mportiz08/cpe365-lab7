@@ -7,6 +7,7 @@ package lab7;
 
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
+import javax.swing.*;
 
 /**
  *
@@ -52,12 +53,16 @@ public class RevenuePanel extends javax.swing.JPanel
     if(this.revenueOption.isSelected())
     {
       System.out.println("rev selected");
-      // TODO
+      JTable table = new JTable(this.model.getRevTable());
+      this.tableContainer.setViewportView(table);
+      table.setFillsViewportHeight(true);
     }
     else if(this.reservationsOption.isSelected())
     {
       System.out.println("res selected");
-      // TODO
+      JTable table = new JTable(this.model.getResTable());
+      this.tableContainer.setViewportView(table);
+      table.setFillsViewportHeight(true);
     }
   }
 
