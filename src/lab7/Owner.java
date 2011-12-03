@@ -263,4 +263,38 @@ public class Owner {
        
        return temp.toArray(new Object[temp.size()][temp.size()]);
   }
+    
+    public Object[][] getRoomInfo(String roomname){
+        
+        ArrayList<Object[]> temp = new ArrayList<Object[]>();
+        String stmt = "Select * from Rooms where name = " + "'" + roomname + "'";
+        ResultSet results = execute(stmt);
+        
+        System.out.println(stmt);
+       try {
+          boolean b = results.next();    
+          while(b)
+          {
+             String Id = results.getString("Id");
+             String Name = results.getString("Name");
+             Integer Beds = results.getInt("Beds");
+             String BedType = results.getString("BedType");
+             Integer MaxOccupancy = results.getInt("MaxOccupancy");
+             Integer BasePrice = results.getInt("BasePrice");
+             String Decor = results.getString("Decor");
+             Object[] res = {Id, Name, Beds, BedType, MaxOccupancy, BasePrice, Decor};
+             
+             temp.add(res);
+             b = results.next();
+          }  
+       }
+       catch(SQLException e)
+       {
+          System.err.println("Error retrieving Reservation records from database.");
+          System.exit(1);
+       }
+       return temp.toArray(new Object[temp.size()][temp.size()]);
+        
+    }
+    
 }

@@ -171,7 +171,7 @@ private void ReservationsButtonActionPerformed(java.awt.event.ActionEvent evt) {
 private void RoomsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RoomsButtonActionPerformed
 
     System.out.println("Rooms Button");
-    RoomsPanel rooms = new RoomsPanel();
+    RoomsPanel rooms = new RoomsPanel(owner);
     ContentPane.setContentPane(rooms);
     ContentPane.setVisible(true);
 }//GEN-LAST:event_RoomsButtonActionPerformed

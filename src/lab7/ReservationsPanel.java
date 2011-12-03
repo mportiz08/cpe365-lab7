@@ -254,24 +254,6 @@ private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GE
        ReservationsModel.addRow(i);
     }
     ReservationsModel.fireTableChanged(null);
-    /*for(Integer[] i : reservations){
-        System.out.println("In reservations loop");
-        if(ReservationsModel.getRowCount() == 0){
-            System.out.println("found empty table");
-            ReservationsModel.addRow(i);
-        }
-        else{
-           boolean flag = false;
-           for(int j = 0; j < ReservationsModel.getRowCount(); j++) {
-              if(i[0].equals(ReservationsModel.getValueAt(j, 0))){
-                 flag = true;
-              }
-           }
-           if(!flag){
-               ReservationsModel.addRow(i);
-           }
-        }
-    }*/
     
     ReservationsTable.setRowSelectionAllowed(true);
     ReservationsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

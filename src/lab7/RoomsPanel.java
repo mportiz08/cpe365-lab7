@@ -10,15 +10,63 @@
  */
 package lab7;
 
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author spartan
  */
 public class RoomsPanel extends javax.swing.JPanel {
 
+    /**
+     * Private Class for Listening for Row Selections for 1 Date
+     */
+    private class ReservationsSelectionListener implements ListSelectionListener {
+
+        private JTable table;
+        
+        ReservationsSelectionListener(JTable table1) {
+           this.table = table1;
+        }
+        public void valueChanged(ListSelectionEvent e) {
+           int row = 0;
+           if (table.getRowSelectionAllowed() && !table.getColumnSelectionAllowed() && !e.getValueIsAdjusting()) {
+              row = table.getSelectedRow();
+              
+              int resNum = Integer.parseInt(ReservationsModel.getValueAt(row, 0).toString());
+              Object[][] info = owner.ReservationInfo(resNum);
+              if(ResInfoModel.getRowCount() != 0){
+                 for(int i = 0; i < ResInfoModel.getRowCount(); i++){
+                    ResInfoModel.removeRow(i);
+                    ResInfoModel.fireTableRowsDeleted(i, i);
+                 }
+              }
+              ResInfoModel.addRow(info[0]);
+           }
+        }
+    }
     /** Creates new form RoomsPanel */
-    public RoomsPanel() {
+    public RoomsPanel(Owner own) {
+        this.owner = own;
+        Object[] Names = {"Rooms"};
+        Object[] Info = {"ID", "Name", "Beds", "BedType", "MaxOccupancy", "BasePrice", "Decor"};
+        Object[] Res = {"Reservation numbers"};
+        Object[] ResInfo = {"Code", "Room", "Checkin", "Checkout", "Rate", "Lastname", "Firstname", "Adults", "Kids"};
+        
+        RoomsModel = new DefaultTableModel(owner.getAllRooms(), Names);
+        InfoModel = new DefaultTableModel(new Object[0][0], Info);
+        ReservationsModel = new DefaultTableModel(new Object[0][0], Res);
+        ResInfoModel = new DefaultTableModel(new Object[0][0], ResInfo);
+       
         initComponents();
+        
+       // RoomsTable.setRowSelectionAllowed(true);
+       // RoomsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+       // RoomsTable.getSelectionModel().addListSelectionListener(new ReservationsSelectionListener(RoomsTable));
     }
 
     /** This method is called from within the constructor to
@@ -30,7 +78,36 @@ public class RoomsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        RoomsTable = new javax.swing.JTable();
+        InfoButton = new javax.swing.JButton();
+        ReservationsButton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        InfoTable = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        ReservationsTable = new javax.swing.JTable();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+
+        jScrollPane4.setName("jScrollPane4"); // NOI18N
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.setName("jTable1"); // NOI18N
+        jScrollPane4.setViewportView(jTable1);
 
         setName("Form"); // NOI18N
         setPreferredSize(new java.awt.Dimension(900, 600));
@@ -40,23 +117,171 @@ public class RoomsPanel extends javax.swing.JPanel {
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
+        jScrollPane1.setName("jScrollPane1"); // NOI18N
+
+        RoomsTable.setModel(RoomsModel);
+        RoomsTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        RoomsTable.setFillsViewportHeight(true);
+        RoomsTable.setName("RoomsTable"); // NOI18N
+        RoomsTable.setRowHeight(30);
+        RoomsTable.setRowMargin(5);
+        jScrollPane1.setViewportView(RoomsTable);
+
+        InfoButton.setText(resourceMap.getString("InfoButton.text")); // NOI18N
+        InfoButton.setName("InfoButton"); // NOI18N
+        InfoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InfoButtonActionPerformed(evt);
+            }
+        });
+
+        ReservationsButton.setText(resourceMap.getString("ReservationsButton.text")); // NOI18N
+        ReservationsButton.setName("ReservationsButton"); // NOI18N
+        ReservationsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReservationsButtonActionPerformed(evt);
+            }
+        });
+
+        jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+        InfoTable.setModel(InfoModel);
+        InfoTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        InfoTable.setFillsViewportHeight(true);
+        InfoTable.setName("InfoTable"); // NOI18N
+        jScrollPane2.setViewportView(InfoTable);
+
+        jScrollPane3.setName("jScrollPane3"); // NOI18N
+
+        ReservationsTable.setModel(ReservationsModel);
+        ReservationsTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        ReservationsTable.setFillsViewportHeight(true);
+        ReservationsTable.setName("ReservationsTable"); // NOI18N
+        jScrollPane3.setViewportView(ReservationsTable);
+
+        jScrollPane5.setName("jScrollPane5"); // NOI18N
+
+        jTable2.setModel(ResInfoModel);
+        jTable2.setName("jTable2"); // NOI18N
+        jScrollPane5.setViewportView(jTable2);
+
+        jLabel2.setFont(resourceMap.getFont("jLabel2.font")); // NOI18N
+        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
+        jLabel2.setName("jLabel2"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(344, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(398, 398, 398))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(InfoButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ReservationsButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane3)
+                                    .addComponent(jScrollPane2)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(363, 363, 363)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(857, 857, 857))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(541, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(InfoButton)
+                .addGap(90, 90, 90)
+                .addComponent(ReservationsButton)
+                .addContainerGap(304, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+private void InfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InfoButtonActionPerformed
+   // TODO add your handling code here:
+    int row = RoomsTable.getSelectedRow();
+    if(row != -1){
+        if(InfoModel.getRowCount() != 0){
+            for(int i = 0; i < InfoModel.getRowCount(); i++){
+                InfoModel.removeRow(i);
+                InfoModel.fireTableRowsDeleted(i, i);
+            }
+        }
+       String roomname = RoomsModel.getValueAt(row, 0).toString();
+       InfoModel.addRow(owner.getRoomInfo(roomname)[0]);
+       InfoModel.fireTableChanged(null);
+    }
+}//GEN-LAST:event_InfoButtonActionPerformed
+
+private void ReservationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReservationsButtonActionPerformed
+    int row = RoomsTable.getSelectedRow();
+    if(row != -1){
+        if(ReservationsModel.getRowCount() != 0){
+            for(int i = 0; i < ReservationsModel.getRowCount(); i++){
+                ReservationsModel.removeRow(i);
+                ReservationsModel.fireTableRowsDeleted(i, i);
+            }
+        }
+        
+        String roomname = RoomsModel.getValueAt(row, 0).toString();
+        String stmt = "SELECT Code FROM Rooms, Reservations WHERE " + 
+                "Name = " + "'" + roomname + "' AND room = id " + 
+                " ORDER BY Checkin";
+       
+       Integer[][] res = owner.findReservation(stmt);
+       for(Integer[] o : res){
+          ReservationsModel.addRow(o);
+          ReservationsModel.fireTableChanged(null);
+       }
+       
+    ReservationsTable.setRowSelectionAllowed(true);
+    ReservationsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    ReservationsTable.getSelectionModel().addListSelectionListener(new ReservationsSelectionListener(ReservationsTable));
+    }
+}//GEN-LAST:event_ReservationsButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton InfoButton;
+    private javax.swing.JTable InfoTable;
+    private javax.swing.JButton ReservationsButton;
+    private javax.swing.JTable ReservationsTable;
+    private javax.swing.JTable RoomsTable;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     // End of variables declaration//GEN-END:variables
+    private DefaultTableModel RoomsModel;
+    private DefaultTableModel InfoModel;
+    private DefaultTableModel ReservationsModel;
+    private DefaultTableModel ResInfoModel;
+    private Owner owner;
 }
