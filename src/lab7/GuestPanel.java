@@ -53,9 +53,11 @@ public class GuestPanel extends javax.swing.JPanel
         setPreferredSize(new java.awt.Dimension(700, 400));
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(lab7.Lab7App.class).getContext().getResourceMap(GuestPanel.class);
+        jLabel1.setFont(resourceMap.getFont("jLabel1.font")); // NOI18N
         jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
         jLabel1.setName("jLabel1"); // NOI18N
 
+        jButton1.setFont(resourceMap.getFont("jButton1.font")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -64,6 +66,7 @@ public class GuestPanel extends javax.swing.JPanel
             }
         });
 
+        jButton2.setFont(resourceMap.getFont("jButton2.font")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -79,13 +82,13 @@ public class GuestPanel extends javax.swing.JPanel
             .add(layout.createSequentialGroup()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(jLabel1))
-                    .add(layout.createSequentialGroup()
                         .add(39, 39, 39)
                         .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 135, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(49, 49, 49)
-                        .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 134, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 134, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(layout.createSequentialGroup()
+                        .add(134, 134, 134)
+                        .add(jLabel1)))
                 .addContainerGap(343, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -97,14 +100,14 @@ public class GuestPanel extends javax.swing.JPanel
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, jButton2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.LEADING, jButton1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 private void ratesMethod(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ratesMethod
     // TODO add your handling code here:
     System.out.println("Clicked Rooms/Rates Button");
-    RoomsRatesPanel rooms_rates = new RoomsRatesPanel();
+    RoomsRatesPanel rooms_rates = new RoomsRatesPanel(guest);
     ContentPane.setContentPane(rooms_rates);
     ContentPane.setVisible(true);
 }//GEN-LAST:event_ratesMethod
