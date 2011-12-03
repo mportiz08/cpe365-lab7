@@ -1,6 +1,7 @@
 package lab7;
 
 import java.sql.*;
+import java.util.*;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -60,13 +61,32 @@ public class Revenue
   
   public AbstractTableModel getResTable()
   {
-    Object[][] data = {};
-    return new BaseTableModel(data);
+    return new BaseTableModel(getResCounts());
   }
   
   public AbstractTableModel getRevTable()
   {
-    Object[][] data = {};
-    return new BaseTableModel(data);
+    return new BaseTableModel(getRevCounts());
+  }
+  
+  private Object[][] getResCounts()
+  {
+    ArrayList<Object[]> rows = getRows("CHANGE ME");
+    return rows.toArray(new Object[rows.size()][rows.size()]);
+  }
+  
+  private Object[][] getRevCounts()
+  {
+    ArrayList<Object[]> rows = getRows("CHANGE ME");
+    return rows.toArray(new Object[rows.size()][rows.size()]);
+  }
+  
+  private ArrayList<Object[]> getRows(String sql)
+  {
+    ArrayList<Object[]> rows = new ArrayList<Object[]>();
+    
+    // TODO
+    
+    return rows;
   }
 }
