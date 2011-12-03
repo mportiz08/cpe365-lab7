@@ -38,17 +38,18 @@ public class ReservationsPanel extends javax.swing.JPanel {
            int row = 0;
            if (table.getRowSelectionAllowed() && !table.getColumnSelectionAllowed() && !e.getValueIsAdjusting()) {
               row = table.getSelectedRow();
-          
-              int resNum = Integer.parseInt(ReservationsModel.getValueAt(row, 0).toString());
-              Object[][] info = owner.ReservationInfo(resNum);
-              if(InfoModel.getRowCount() == 0){
-                InfoModel.addRow(info[0]);
-              }
-              else{
-                  for(int i = 0; i < InfoModel.getRowCount(); i++){
-                      InfoModel.removeRow(i);
+              if(row != -1){
+                  int resNum = Integer.parseInt(ReservationsModel.getValueAt(row, 0).toString());
+                  Object[][] info = owner.ReservationInfo(resNum);
+                  if(InfoModel.getRowCount() == 0){
+                    InfoModel.addRow(info[0]);
                   }
-                  InfoModel.addRow(info[0]);
+                  else{
+                      for(int i = 0; i < InfoModel.getRowCount(); i++){
+                          InfoModel.removeRow(i);
+                      }
+                      InfoModel.addRow(info[0]);
+                  }
               }
            }
         }
@@ -242,13 +243,15 @@ private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GE
             "AND Checkin < to_date('" + Integer.parseInt(four.getText()) + "-" + 
             three.getText() + "-10','DD-MM-YY')";
     Integer[][] reservations = owner.findReservation(stmt);
-
-    if(ReservationsModel.getRowCount() != 0){   
-       for(int j = 0; j < ReservationsModel.getRowCount(); j++) {
+    
+    int size = ReservationsModel.getRowCount();
+    if(size != 0){   
+       for(int j = (size-1); j >= 0; j--) {
           ReservationsModel.removeRow(j);
+          ReservationsModel.fireTableRowsDeleted(j, j);
        }
-       ReservationsModel.fireTableRowsDeleted(ERROR, ERROR);
     }
+    System.out.println(ReservationsModel.getRowCount());
     
     for(Integer[] i : reservations){
        ReservationsModel.addRow(i);

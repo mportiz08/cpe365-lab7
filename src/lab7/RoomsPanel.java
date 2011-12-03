@@ -36,16 +36,18 @@ public class RoomsPanel extends javax.swing.JPanel {
            int row = 0;
            if (table.getRowSelectionAllowed() && !table.getColumnSelectionAllowed() && !e.getValueIsAdjusting()) {
               row = table.getSelectedRow();
-              
-              int resNum = Integer.parseInt(ReservationsModel.getValueAt(row, 0).toString());
-              Object[][] info = owner.ReservationInfo(resNum);
-              if(ResInfoModel.getRowCount() != 0){
-                 for(int i = 0; i < ResInfoModel.getRowCount(); i++){
-                    ResInfoModel.removeRow(i);
-                    ResInfoModel.fireTableRowsDeleted(i, i);
-                 }
+              if(row != -1){
+                  int resNum = Integer.parseInt(ReservationsModel.getValueAt(row, 0).toString());
+                  Object[][] info = owner.ReservationInfo(resNum);
+                  
+                  if(ResInfoModel.getRowCount() != 0){
+                     for(int i = 0; i < ResInfoModel.getRowCount(); i++){
+                        ResInfoModel.removeRow(i);
+                        ResInfoModel.fireTableRowsDeleted(i, i);
+                     }
+                  }
+                  ResInfoModel.addRow(info[0]);
               }
-              ResInfoModel.addRow(info[0]);
            }
         }
     }
@@ -162,6 +164,7 @@ public class RoomsPanel extends javax.swing.JPanel {
         jScrollPane5.setName("jScrollPane5"); // NOI18N
 
         jTable2.setModel(ResInfoModel);
+        jTable2.setFillsViewportHeight(true);
         jTable2.setName("jTable2"); // NOI18N
         jScrollPane5.setViewportView(jTable2);
 
@@ -237,10 +240,13 @@ private void InfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
 }//GEN-LAST:event_InfoButtonActionPerformed
 
 private void ReservationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReservationsButtonActionPerformed
+
     int row = RoomsTable.getSelectedRow();
     if(row != -1){
-        if(ReservationsModel.getRowCount() != 0){
-            for(int i = 0; i < ReservationsModel.getRowCount(); i++){
+        
+        int size = ReservationsModel.getRowCount();
+        if(size != 0){
+            for(int i = (size-1); i >= 0; i--){
                 ReservationsModel.removeRow(i);
                 ReservationsModel.fireTableRowsDeleted(i, i);
             }

@@ -37,26 +37,27 @@ public class OccupancyPanel extends javax.swing.JPanel {
            int row;
            if (table.getRowSelectionAllowed() && !table.getColumnSelectionAllowed() && !e.getValueIsAdjusting()) {
               row = table.getSelectedRow();
-              System.out.println("Selected Room: " + RoomsModel.getValueAt(row, 0));
-                
-              if("Occupied".equals(RoomsModel.getValueAt(row, 1).toString())){
-                 int resNumber;
-                 String stmt = "SELECT Code from rooms, reservations WHERE Room = Id" +
-                " AND Name = " + "'" + RoomsModel.getValueAt(row, 0).toString() + "'" + 
-                " AND to_date('" + Integer.parseInt(two.getText()) + "-" + one.getText() + 
-                "-10','DD-MM-YY') >= CheckIn AND to_date('" + Integer.parseInt(two.getText()) + "-" + 
-                 one.getText() + "-10','DD-MM-YY') < CheckOut";
-                 
-                 //Object method to find reservation
-                 Object[][] reservations = owner.findReservation(stmt);
-                 resNumber = Integer.parseInt(reservations[0][0].toString());
-                 Object[] ReservationsName = {"Reservation(s)"};
-                 ReservationsTable.setModel(new DefaultTableModel(reservations, ReservationsName));
-                 
-                 //Object method to find reservation details
-                 Object[][] info = owner.ReservationInfo(resNumber);
-                 Object[] InfoName = {"Code", "Room", "Checkin", "Checkout", "Rate", "Lastname", "Firstname", "Adults", "Kids"};
-                 InfoTable.setModel(new DefaultTableModel(info, InfoName));
+              
+              if(row != -1){  
+                  if("Occupied".equals(RoomsModel.getValueAt(row, 1).toString())){
+                     int resNumber;
+                     String stmt = "SELECT Code from rooms, reservations WHERE Room = Id" +
+                    " AND Name = " + "'" + RoomsModel.getValueAt(row, 0).toString() + "'" + 
+                    " AND to_date('" + Integer.parseInt(two.getText()) + "-" + one.getText() + 
+                    "-10','DD-MM-YY') >= CheckIn AND to_date('" + Integer.parseInt(two.getText()) + "-" + 
+                     one.getText() + "-10','DD-MM-YY') < CheckOut";
+
+                     //Object method to find reservation
+                     Object[][] reservations = owner.findReservation(stmt);
+                     resNumber = Integer.parseInt(reservations[0][0].toString());
+                     Object[] ReservationsName = {"Reservation(s)"};
+                     ReservationsTable.setModel(new DefaultTableModel(reservations, ReservationsName));
+
+                     //Object method to find reservation details
+                     Object[][] info = owner.ReservationInfo(resNumber);
+                     Object[] InfoName = {"Code", "Room", "Checkin", "Checkout", "Rate", "Lastname", "Firstname", "Adults", "Kids"};
+                     InfoTable.setModel(new DefaultTableModel(info, InfoName));
+                  }
               }
            }
        }
@@ -75,57 +76,60 @@ public class OccupancyPanel extends javax.swing.JPanel {
         public void valueChanged(ListSelectionEvent e) {
            int row;
            if (table.getRowSelectionAllowed() && !table.getColumnSelectionAllowed() && !e.getValueIsAdjusting()) {
-              row = table.getSelectedRow();                
-              if("Fully Occupied".equals(RoomsModel.getValueAt(row, 1).toString())){
-                 int resNumber;
-                 String FullyStmt = "SELECT Code FROM Rooms, Reservations " +
-                "WHERE Id = Room AND Name = " + "'" + RoomsModel.getValueAt(row, 0).toString() + "'" +
-                " AND to_date('" + Integer.parseInt(four.getText()) + "-" + three.getText() +
-                "-10','DD-MM-YY') >= Checkin AND to_date('" + Integer.parseInt(six.getText()) + "-" +
-                five.getText() + "-10','DD-MM-YY') <= Checkout";
-                 
-                 Object[][] reservations = owner.findReservation(FullyStmt);
-                 resNumber = Integer.parseInt(reservations[0][0].toString());
-                 Object[] ReservationsName = {"Reservation(s)"};
-                 ReservationsTable.setModel(new DefaultTableModel(reservations, ReservationsName));
-                 
-                 //Object method to find reservation details
-                 Object[][] info = owner.ReservationInfo(resNumber);
-                 Object[] InfoName = {"Code", "Room", "Checkin", "Checkout", "Rate", "Lastname", "Firstname", "Adults", "Kids"};
-                 InfoTable.setModel(new DefaultTableModel(info, InfoName));
-              }
-              else if("Partially Occupied".equals(RoomsModel.getValueAt(row, 1).toString())){
-                 Object[] resNumber;
-                 String PartialStmt = "SELECT Code from Rooms, Reservations " +
+              row = table.getSelectedRow();  
+              
+              if(row != -1){
+                  if("Fully Occupied".equals(RoomsModel.getValueAt(row, 1).toString())){
+                     int resNumber;
+                     String FullyStmt = "SELECT Code FROM Rooms, Reservations " +
                     "WHERE Id = Room AND Name = " + "'" + RoomsModel.getValueAt(row, 0).toString() + "'" +
-                    " AND to_date('" + Integer.parseInt(four.getText()) + "-" + three.getText() + "-10','DD-MM-YY') >= checkin " +
-                    "AND to_date('" + Integer.parseInt(four.getText()) + "-" + three.getText() + "-10','DD-MM-YY') < checkout " +
-                    "AND to_date('" + Integer.parseInt(six.getText()) + "-" + five.getText() + "-10','DD-MM-YY') > checkout " +
-                    "UNION " +
-                    "SELECT Code from Rooms, Reservations " +
-                    "WHERE Id = room AND " + "Name = " + "'" + RoomsModel.getValueAt(row, 0).toString() + "'" +
-                    " AND to_date('" + Integer.parseInt(four.getText()) + "-" + three.getText() + "-10','DD-MM-YY') < checkin " +
-                    "AND to_date('" + Integer.parseInt(six.getText()) + "-" + five.getText() + "-10','DD-MM-YY') >= checkin " +
-                    "AND to_date('" + Integer.parseInt(six.getText()) + "-" + five.getText() + "-10','DD-MM-YY') < checkout " +
-                    "UNION " +
-                    "SELECT Code from Rooms, Reservations " +
-                    "WHERE Id = room AND " + "Name = " + "'" + RoomsModel.getValueAt(row, 0).toString() + "'" +
-                    " AND to_date('" + Integer.parseInt(four.getText()) + "-" + three.getText() + "-10','DD-MM-YY') <= checkin " +
-                    " AND to_date('" + Integer.parseInt(four.getText()) + "-" + three.getText() + "-10','DD-MM-YY') < checkout " +
-                    "AND to_date('" + Integer.parseInt(six.getText()) + "-" + five.getText() + "-10','DD-MM-YY') > checkin " +
-                    "AND to_date('" + Integer.parseInt(six.getText()) + "-" + five.getText() + "-10','DD-MM-YY') >= checkout";
-                 
-                 Integer[][] reservations = owner.findReservation(PartialStmt);
-                 Object[] ReservationsName = {"Reservations"};
-                 ReservationsTable.setModel(new DefaultTableModel(reservations, ReservationsName));
-                 
-                 //Object method to find reservation details
-                 Object[] InfoName = {"Code", "Room", "Checkin", "Checkout", "Rate", "Lastname", "Firstname", "Adults", "Kids"};
-                 InfoModel = new DefaultTableModel(new Object[0][0], InfoName);
-                 InfoTable.setModel(InfoModel);
-                 for(Integer[] i : reservations){
-                   InfoModel.addRow(owner.ReservationInfo(i[0].intValue())[0]);
-                 }
+                    " AND to_date('" + Integer.parseInt(four.getText()) + "-" + three.getText() +
+                    "-10','DD-MM-YY') >= Checkin AND to_date('" + Integer.parseInt(six.getText()) + "-" +
+                    five.getText() + "-10','DD-MM-YY') <= Checkout";
+
+                     Object[][] reservations = owner.findReservation(FullyStmt);
+                     resNumber = Integer.parseInt(reservations[0][0].toString());
+                     Object[] ReservationsName = {"Reservation(s)"};
+                     ReservationsTable.setModel(new DefaultTableModel(reservations, ReservationsName));
+
+                     //Object method to find reservation details
+                     Object[][] info = owner.ReservationInfo(resNumber);
+                     Object[] InfoName = {"Code", "Room", "Checkin", "Checkout", "Rate", "Lastname", "Firstname", "Adults", "Kids"};
+                     InfoTable.setModel(new DefaultTableModel(info, InfoName));
+                  }
+                  else if("Partially Occupied".equals(RoomsModel.getValueAt(row, 1).toString())){
+                     Object[] resNumber;
+                     String PartialStmt = "SELECT Code from Rooms, Reservations " +
+                        "WHERE Id = Room AND Name = " + "'" + RoomsModel.getValueAt(row, 0).toString() + "'" +
+                        " AND to_date('" + Integer.parseInt(four.getText()) + "-" + three.getText() + "-10','DD-MM-YY') >= checkin " +
+                        "AND to_date('" + Integer.parseInt(four.getText()) + "-" + three.getText() + "-10','DD-MM-YY') < checkout " +
+                        "AND to_date('" + Integer.parseInt(six.getText()) + "-" + five.getText() + "-10','DD-MM-YY') > checkout " +
+                        "UNION " +
+                        "SELECT Code from Rooms, Reservations " +
+                        "WHERE Id = room AND " + "Name = " + "'" + RoomsModel.getValueAt(row, 0).toString() + "'" +
+                        " AND to_date('" + Integer.parseInt(four.getText()) + "-" + three.getText() + "-10','DD-MM-YY') < checkin " +
+                        "AND to_date('" + Integer.parseInt(six.getText()) + "-" + five.getText() + "-10','DD-MM-YY') >= checkin " +
+                        "AND to_date('" + Integer.parseInt(six.getText()) + "-" + five.getText() + "-10','DD-MM-YY') < checkout " +
+                        "UNION " +
+                        "SELECT Code from Rooms, Reservations " +
+                        "WHERE Id = room AND " + "Name = " + "'" + RoomsModel.getValueAt(row, 0).toString() + "'" +
+                        " AND to_date('" + Integer.parseInt(four.getText()) + "-" + three.getText() + "-10','DD-MM-YY') <= checkin " +
+                        " AND to_date('" + Integer.parseInt(four.getText()) + "-" + three.getText() + "-10','DD-MM-YY') < checkout " +
+                        "AND to_date('" + Integer.parseInt(six.getText()) + "-" + five.getText() + "-10','DD-MM-YY') > checkin " +
+                        "AND to_date('" + Integer.parseInt(six.getText()) + "-" + five.getText() + "-10','DD-MM-YY') >= checkout";
+
+                     Integer[][] reservations = owner.findReservation(PartialStmt);
+                     Object[] ReservationsName = {"Reservations"};
+                     ReservationsTable.setModel(new DefaultTableModel(reservations, ReservationsName));
+
+                     //Object method to find reservation details
+                     Object[] InfoName = {"Code", "Room", "Checkin", "Checkout", "Rate", "Lastname", "Firstname", "Adults", "Kids"};
+                     InfoModel = new DefaultTableModel(new Object[0][0], InfoName);
+                     InfoTable.setModel(InfoModel);
+                     for(Integer[] i : reservations){
+                       InfoModel.addRow(owner.ReservationInfo(i[0].intValue())[0]);
+                     }
+                  }
               }
            }
        }
