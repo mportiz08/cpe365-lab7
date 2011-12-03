@@ -71,21 +71,54 @@ public class Revenue
   
   private Object[][] getResCounts()
   {
-    ArrayList<Object[]> rows = getRows("CHANGE ME");
+    ArrayList<Object[]> rows = getRows("CHANGE ME", "res");
     return rows.toArray(new Object[rows.size()][rows.size()]);
   }
   
   private Object[][] getRevCounts()
   {
-    ArrayList<Object[]> rows = getRows("CHANGE ME");
+    String sql =
+     "SELECT Name, Month, SUM(Revenue) AS Revenue" +
+     "FROM (" +
+       "SELECT RM.Name, TO_CHAR(RS.CheckIn, 'MON') AS Month, ((RS.CheckOut - RS.CheckIn) * RS.Rate) AS Revenue" +
+       "FROM Reservations RS, Rooms RM" +
+       "WHERE RS.Room = RM.Id" +
+     ")" +
+     "GROUP BY Name, Month;";
+    ArrayList<Object[]> rows = getRows(sql, "rev");
     return rows.toArray(new Object[rows.size()][rows.size()]);
   }
   
-  private ArrayList<Object[]> getRows(String sql)
+  private ArrayList<Object[]> getRows(String sql, String numType)
   {
     ArrayList<Object[]> rows = new ArrayList<Object[]>();
     
-    // TODO
+    Statement s = null;
+    ResultSet results = null;
+    try
+    {
+      s = this.conn.createStatement();
+      results = s.executeQuery(sql);
+      
+      Object[] row = new Object[12];
+      row[0] = results.getString(1);
+      row[1] = results.getString(2);
+      if(numType.equals("rev"))
+      {
+        row[2] = results.getDouble(3);
+      }
+      else if(numType.equals("res"))
+      {
+        row[2] = results.getInt(3);
+      }
+      
+      rows.add(row);
+    }
+    catch(SQLException e)
+    {
+      System.err.println("Error occured when retrieving info from database.");
+      System.exit(1);
+    }
     
     return rows;
   }
