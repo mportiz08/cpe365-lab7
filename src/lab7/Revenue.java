@@ -20,7 +20,7 @@ public class Revenue
       this.data = data;
       String[] columns = {"Room", "Jan", "Feb", "March", "April", "May", "June",
                           "July", "August", "September", "October", "November",
-                          "December"};
+                          "December", "Total"};
       this.cols = columns;
     }
 
@@ -112,11 +112,15 @@ public class Revenue
       ArrayList<Object> row = new ArrayList<Object>();
       row.add(r.getKey());
       int i = 0;
+      int total = 0;
       for(String m : COLS)
       {
-        row.add(r.getValue().get(i)[1]);
+        Integer res = (Integer)r.getValue().get(i)[1];
+        total += res;
+        row.add(res);
         i++;
       }
+      row.add(total);
       ret.add(row.toArray(new Object[row.size()]));
     }
     return ret.toArray(new Object[ret.size()][rows.size()]);
@@ -166,11 +170,15 @@ public class Revenue
       ArrayList<Object> row = new ArrayList<Object>();
       row.add(r.getKey());
       int i = 0;
+      double total = 0;
       for(String m : COLS)
       {
-        row.add(r.getValue().get(i)[1]);
+        Double rev = (Double)r.getValue().get(i)[1];
+        total += rev;
+        row.add(rev);
         i++;
       }
+      row.add(total);
       ret.add(row.toArray(new Object[row.size()]));
     }
     return ret.toArray(new Object[ret.size()][rows.size()]);
